@@ -141,7 +141,7 @@ export const ProductModal: React.FC = () => {
                 </span>
                 <span className="flex items-center gap-1 text-[11px] text-cocoa-500">
                   <ShieldCheck className="w-3.5 h-3.5 text-gold-600" />
-                  <span>Nile Backend Verified</span>
+                  <span>100% Authentic Formula</span>
                 </span>
               </div>
 
@@ -292,12 +292,12 @@ export const ProductModal: React.FC = () => {
                   {isOutOfStock ? (
                     <span className="text-rose-600 font-semibold">Currently Out of Stock</span>
                   ) : (
-                    <span>{selectedProduct.stock} units available in Nile inventory</span>
+                    <span>{selectedProduct.stock} units currently available</span>
                   )}
                 </div>
               </div>
 
-              {/* Authoritative Nile Add to Cart */}
+              {/* Add to Cart */}
               <button
                 onClick={handleAddToCart}
                 disabled={isOutOfStock || isAdding}
@@ -310,16 +310,16 @@ export const ProductModal: React.FC = () => {
                 }`}
               >
                 {isAdding ? (
-                  <span>Syncing with Nile Cart...</span>
+                  <span>Adding to Bag...</span>
                 ) : justAdded ? (
                   <>
                     <Check className="w-4 h-4" />
-                    <span>Added to Nile Cart</span>
+                    <span>Added to Bag</span>
                   </>
                 ) : (
                   <>
                     <ShoppingBag className="w-4 h-4" />
-                    <span>Add to Nile Cart • {formatPrice(currentPrice * quantity)}</span>
+                    <span>Add to Bag • {formatPrice(currentPrice * quantity)}</span>
                   </>
                 )}
               </button>

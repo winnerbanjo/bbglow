@@ -1,9 +1,9 @@
 import React from 'react';
-import { ShieldCheck, MessageCircle, Heart, Lock, ExternalLink } from 'lucide-react';
+import { ShieldCheck, MessageCircle, ExternalLink } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
 
 export const Footer: React.FC = () => {
-  const { store, setIsDevDrawerOpen, lastRequestId } = useStore();
+  const { store } = useStore();
 
   return (
     <footer className="bg-cocoa-950 text-ivory-200 pt-16 pb-12 border-t border-cocoa-900">
@@ -27,11 +27,11 @@ export const Footer: React.FC = () => {
               </span>
             </div>
             <p className="text-xs text-ivory-300 max-w-sm leading-relaxed font-normal">
-              Medical-grade radiance skincare formulated for hyperpigmentation-prone and delicate skin. Crafted with pride, verified for authenticity, and powered by Nile's headless commerce architecture.
+              Medical-grade radiance skincare formulated for hyperpigmentation-prone and delicate skin. Crafted with pride, verified for authenticity, and designed to reveal pure, even-toned luminescence.
             </p>
             <div className="pt-2 flex items-center gap-2 text-xs text-gold-400">
               <ShieldCheck className="w-4 h-4" />
-              <span>Nile Authoritative Commerce & Payment Routing</span>
+              <span>100% Guaranteed Authentic Formulation</span>
             </div>
           </div>
 
@@ -91,7 +91,7 @@ export const Footer: React.FC = () => {
         <div className="pt-8 border-t border-cocoa-900 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-cocoa-400">
           <div className="flex flex-wrap items-center gap-3">
             <span className="text-[11px] uppercase tracking-wider text-cocoa-500 font-semibold">
-              Secured Via Nile Gateways:
+              Accepted Payment Methods:
             </span>
             <span className="px-2 py-0.5 rounded bg-cocoa-900 border border-cocoa-800 text-[11px] text-ivory-200 font-medium">
               Paystack
@@ -108,14 +108,6 @@ export const Footer: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <button
-              onClick={() => setIsDevDrawerOpen(true)}
-              className="text-xs text-gold-400 hover:underline flex items-center gap-1"
-            >
-              <span>Nile API Diagnostics</span>
-              {lastRequestId && <span className="text-cocoa-500">({lastRequestId.slice(0, 12)}...)</span>}
-            </button>
-            <span>•</span>
             <a
               href="https://bbglowskincare.com"
               target="_blank"
@@ -130,7 +122,7 @@ export const Footer: React.FC = () => {
 
         {/* Copyright */}
         <div className="pt-4 border-t border-cocoa-900/60 text-center text-[11px] text-cocoa-500">
-          <p>© {new Date().getFullYear()} BB Glow Skincare. All Rights Reserved. Commerce operations powered entirely by Nile Storefront API.</p>
+          <p>© {new Date().getFullYear()} BB Glow Skincare. All Rights Reserved.</p>
         </div>
 
       </div>

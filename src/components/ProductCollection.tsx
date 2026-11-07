@@ -28,13 +28,13 @@ export const ProductCollection: React.FC = () => {
           <div className="space-y-2 sm:space-y-3">
             <div className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.25em] text-gold-700">
               <span className="w-1.5 h-1.5 rounded-full bg-gold-600" />
-              <span>Dynamic Nile Catalog</span>
+              <span>Pure Botanical Formulations</span>
             </div>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-cocoa-950">
               The Flawless Collection
             </h2>
             <p className="text-cocoa-600 text-xs sm:text-sm md:text-base max-w-xl">
-              Authentic medical-grade formulations, active inventory, and pricing synchronized live from the Nile commerce backend.
+              Authentic medical-grade formulations designed to restore pure radiance, deeply nourish, and maintain a luminous complexion.
             </p>
           </div>
 

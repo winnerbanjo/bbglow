@@ -36,7 +36,7 @@ export const ReviewMarquee: React.FC = () => {
     {
       author: 'Blessing M.',
       location: 'Atlanta, USA',
-      quote: 'Ordered via Nile with Stripe. 100% authentic formula with visible tone unification.',
+      quote: 'Fast international delivery to the US. 100% authentic formula with visible tone unification.',
       product: 'Flawless Body Milk'
     },
     {

@@ -259,7 +259,7 @@ export const MOCK_REVIEWS: NileReview[] = [
     customerName: 'Folake T. (Abuja)',
     rating: 5,
     title: 'The best investment for my wedding skincare prep',
-    comment: 'Got the starter duo for my wedding countdown. Everyone commented on how bright and even my skin looked in our bridal photos. Nile checkout was also seamless and fast delivery to Abuja within 48 hours.',
+    comment: 'Got the starter duo for my wedding countdown. Everyone commented on how bright and even my skin looked in our bridal photos. Checkout was seamless and fast delivery to Abuja within 48 hours.',
     isVerifiedPurchase: true,
     createdAt: '2026-11-01T16:40:00Z'
   },
@@ -292,7 +292,7 @@ export const MOCK_REVIEWS: NileReview[] = [
     customerName: 'Ngozi E. (London, UK)',
     rating: 5,
     title: 'Dispatched to London via DHL in 4 days! Glass skin result',
-    comment: 'Ordered from the UK using the GBP currency selector. Nile handled payment with my UK card without issues. The body milk keeps my skin radiant even in London cold weather. Will definitely be ordering the full set.',
+    comment: 'Ordered from the UK using the GBP currency selector. Payment with my UK card went through without issues. The body milk keeps my skin radiant even in London cold weather. Will definitely be ordering the full set.',
     isVerifiedPurchase: true,
     createdAt: '2026-11-05T13:45:00Z'
   },

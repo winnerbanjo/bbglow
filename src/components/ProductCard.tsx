@@ -67,7 +67,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           {isOutOfStock ? (
             <div className="absolute inset-0 bg-white/75 backdrop-blur-[2px] z-20 flex items-center justify-center">
               <span className="bg-cocoa-900 text-white text-[11px] sm:text-xs uppercase tracking-widest font-bold px-4 py-2 rounded-full">
-                Sold Out on Nile
+                Sold Out
               </span>
             </div>
           ) : product.stock <= 5 ? (
@@ -145,7 +145,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           }`}
         >
           {isAdding ? (
-            <span>Adding to Nile Cart...</span>
+            <span>Adding to Cart...</span>
           ) : justAdded ? (
             <>
               <Check className="w-4 h-4" />

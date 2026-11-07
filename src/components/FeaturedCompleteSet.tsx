@@ -99,7 +99,7 @@ export const FeaturedCompleteSet: React.FC = () => {
               <div className="pt-4 sm:pt-6 border-t border-cocoa-800 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
                 <div>
                   <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-gold-400 font-semibold">
-                    Authoritative Nile Price
+                    Exclusive Set Value
                   </p>
                   <div className="flex items-baseline gap-2.5">
                     <span className="font-serif text-3xl sm:text-4xl font-bold text-white">
@@ -124,7 +124,7 @@ export const FeaturedCompleteSet: React.FC = () => {
                     }`}
                   >
                     {isAdding ? (
-                      <span>Adding to Nile Cart...</span>
+                      <span>Adding to Cart...</span>
                     ) : justAdded ? (
                       <>
                         <Check className="w-4 h-4" />

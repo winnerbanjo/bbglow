@@ -90,7 +90,7 @@ export const CheckoutModal: React.FC = () => {
       }
     } catch (err: any) {
       console.error('Checkout failed:', err);
-      setErrorMsg(err.message || 'Failed to initialize Nile order. Please check your details and try again.');
+      setErrorMsg(err.message || 'Failed to initialize order. Please check your details and try again.');
       setStep('details');
     }
   };
@@ -130,13 +130,13 @@ export const CheckoutModal: React.FC = () => {
             <div className="space-y-1">
               <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-gold-600 font-semibold">
                 <ShieldCheck className="w-4 h-4" />
-                <span>Nile Authoritative Checkout</span>
+                <span>Encrypted Secure Checkout</span>
               </div>
               <h3 className="font-serif text-2xl sm:text-3xl font-bold text-cocoa-950">
                 Secure Delivery & Payment
               </h3>
               <p className="text-xs text-cocoa-600">
-                Your order is validated and calculated live on Nile’s backend servers.
+                Your order is securely encrypted and validated in real time.
               </p>
             </div>
 
@@ -169,7 +169,7 @@ export const CheckoutModal: React.FC = () => {
                 </h4>
                 <div>
                   <label className="block text-[11px] font-medium text-cocoa-700 uppercase tracking-wider mb-1">
-                    Email Address (for Nile Order Confirmation) *
+                    Email Address (for Order Confirmation) *
                   </label>
                   <input
                     type="email"
@@ -291,7 +291,7 @@ export const CheckoutModal: React.FC = () => {
                   className="w-full py-4 px-6 rounded-2xl bg-cocoa-900 text-ivory-100 hover:bg-gold-600 font-semibold uppercase tracking-wider text-xs transition-all duration-300 flex items-center justify-center gap-2.5 shadow-lg group"
                 >
                   <Lock className="w-4 h-4 text-gold-400" />
-                  <span>Create Order on Nile & Proceed to Payment</span>
+                  <span>Proceed to Secure Payment</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
@@ -299,16 +299,16 @@ export const CheckoutModal: React.FC = () => {
           </div>
         )}
 
-        {/* STEP 2: PROCESSING ON NILE */}
+        {/* STEP 2: PROCESSING ORDER */}
         {step === 'processing' && (
           <div className="py-16 text-center space-y-6">
             <Loader2 className="w-12 h-12 text-gold-600 animate-spin mx-auto" />
             <div className="space-y-2">
               <h3 className="font-serif text-2xl font-bold text-cocoa-950">
-                Authorizing Order on Nile Commerce...
+                Preparing Your Secure Order...
               </h3>
               <p className="text-xs text-cocoa-600 max-w-sm mx-auto">
-                Executing POST /storefront/v1/checkout and generating payment gateway authorization URL.
+                Connecting securely to encrypted payment authorization.
               </p>
             </div>
           </div>
@@ -323,15 +323,15 @@ export const CheckoutModal: React.FC = () => {
 
             <div className="space-y-2">
               <span className="text-xs font-semibold uppercase tracking-widest text-gold-600">
-                Nile Order Created: {activeOrder?.orderNumber}
+                Order Reference: {activeOrder?.orderNumber}
               </span>
               <h3 className="font-serif text-2xl sm:text-3xl font-bold text-cocoa-950">
-                Complete Payment via Nile Gateway
+                Complete Your Payment
               </h3>
               <p className="text-xs text-cocoa-600 max-w-md mx-auto leading-relaxed">
-                Nile has authorized your order total of{' '}
+                Your order total is{' '}
                 <strong className="text-cocoa-900">{formatPrice(activeOrder?.total || 0)}</strong>.
-                Click below to complete authorization through the connected secure gateway.
+                Click below to complete authorization through the secure payment gateway.
               </p>
             </div>
 
@@ -383,7 +383,7 @@ export const CheckoutModal: React.FC = () => {
                 </div>
                 <div className="space-y-2">
                   <span className="text-xs font-semibold uppercase tracking-widest text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-                    Payment Verified by Nile
+                    Payment Verified Successfully
                   </span>
                   <h3 className="font-serif text-3xl font-bold text-cocoa-950">
                     Thank You for Your Order!
@@ -433,7 +433,7 @@ export const CheckoutModal: React.FC = () => {
                     Payment Could Not Be Completed
                   </h3>
                   <p className="text-xs text-cocoa-600 max-w-md mx-auto leading-relaxed">
-                    Nile did not receive a confirmed authorization from the gateway. Your order is safely held in pending status.
+                    We did not receive a confirmed authorization from the gateway. Your order is safely held in pending status.
                   </p>
                 </div>
 

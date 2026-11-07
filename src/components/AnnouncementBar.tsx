@@ -13,7 +13,7 @@ export const AnnouncementBar: React.FC = () => {
         {/* Left: Security & Backend Authority */}
         <div className="hidden md:flex items-center gap-2 text-gold-300 font-medium">
           <ShieldCheck className="w-3.5 h-3.5 text-gold-400 shrink-0" />
-          <span>Commerce Powered by Nile</span>
+          <span>Official BB Glow Store</span>
           <span className="text-cocoa-500">•</span>
           <span className="text-ivory-300">100% Verified Authentic</span>
         </div>

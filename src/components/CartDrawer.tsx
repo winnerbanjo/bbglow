@@ -51,7 +51,7 @@ export const CartDrawer: React.FC = () => {
                     Your Shopping Bag
                   </h3>
                   <span className="text-[11px] uppercase tracking-wider text-cocoa-500 font-medium">
-                    {cart?.itemCount || 0} {cart?.itemCount === 1 ? 'item' : 'items'} • Nile Powered
+                    {cart?.itemCount || 0} {cart?.itemCount === 1 ? 'item' : 'items'}
                   </span>
                 </div>
               </div>
@@ -65,17 +65,11 @@ export const CartDrawer: React.FC = () => {
               </button>
             </div>
 
-            {/* Authoritative Nile Note */}
             <div className="mt-3 py-1.5 px-3 bg-champagne-light rounded-lg border border-gold-200 flex items-center justify-between text-[11px] text-cocoa-700">
               <span className="flex items-center gap-1.5 font-medium">
                 <ShieldCheck className="w-3.5 h-3.5 text-gold-600" />
-                <span>Nile Authoritative Cart Engine</span>
+                <span>100% Genuine Skincare Guaranteed</span>
               </span>
-              {cart?.cartId && (
-                <span className="font-mono text-[10px] text-cocoa-500">
-                  ID: {cart.cartId.slice(0, 10)}...
-                </span>
-              )}
             </div>
           </div>
 
@@ -199,13 +193,13 @@ export const CartDrawer: React.FC = () => {
                 </div>
                 {(cart?.totalDiscount || 0) > 0 && (
                   <div className="flex justify-between text-emerald-700 font-medium">
-                    <span>Nile Server Discount</span>
+                    <span>Promotional Discount</span>
                     <span>-{formatPrice(cart?.totalDiscount || 0)}</span>
                   </div>
                 )}
                 <div className="flex justify-between text-cocoa-600">
                   <span>Shipping</span>
-                  <span className="text-emerald-700 font-semibold">Calculated on Nile Checkout</span>
+                  <span className="text-emerald-700 font-semibold">Calculated at Checkout</span>
                 </div>
                 <div className="pt-2 border-t border-ivory-200 flex justify-between text-sm sm:text-base font-bold text-cocoa-950 font-serif">
                   <span>Estimated Total</span>
@@ -219,12 +213,12 @@ export const CartDrawer: React.FC = () => {
                 disabled={isCartLoading}
                 className="w-full py-4 px-6 rounded-2xl bg-cocoa-900 text-ivory-100 hover:bg-gold-600 font-semibold uppercase tracking-wider text-xs transition-all duration-300 flex items-center justify-center gap-2 shadow-lg group"
               >
-                <span>Proceed to Nile Checkout</span>
+                <span>Proceed to Secure Checkout</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </button>
 
               <p className="text-[10px] text-center text-cocoa-400">
-                🔒 Encrypted Checkout with Connected Gateways (Paystack, Flutterwave, Stripe)
+                🔒 256-Bit SSL Encrypted Checkout
               </p>
             </div>
           )}

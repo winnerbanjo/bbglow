@@ -62,7 +62,7 @@ export const CustomerAuthModal: React.FC = () => {
     try {
       const success = await verifyOtp(email, otp);
       if (success) {
-        setSuccessMsg('Successfully signed in via Nile Customer Auth!');
+        setSuccessMsg('Successfully signed in!');
         setStep('enter_email');
       } else {
         setErrorMsg('Invalid or expired OTP code. Please retry.');
@@ -118,7 +118,7 @@ export const CustomerAuthModal: React.FC = () => {
               <div className="flex items-center justify-between">
                 <h4 className="text-xs font-semibold uppercase tracking-wider text-cocoa-900 flex items-center gap-1.5">
                   <Package className="w-4 h-4 text-gold-600" />
-                  <span>Your Nile Order History ({customerOrders.length})</span>
+                  <span>Your Order History ({customerOrders.length})</span>
                 </h4>
               </div>
 
@@ -174,7 +174,7 @@ export const CustomerAuthModal: React.FC = () => {
               </div>
               <span className="text-[11px] uppercase tracking-widest text-gold-600 font-semibold flex items-center justify-center gap-1">
                 <ShieldCheck className="w-3.5 h-3.5" />
-                <span>Nile Customer Authentication</span>
+                <span>Passwordless Secure Sign In</span>
               </span>
               <h3 className="font-serif text-2xl sm:text-3xl font-bold text-cocoa-950">
                 Sign in to BB Glow
@@ -214,7 +214,7 @@ export const CustomerAuthModal: React.FC = () => {
                   disabled={isLoading}
                   className="w-full py-3.5 px-6 rounded-xl bg-cocoa-900 text-ivory-100 hover:bg-gold-600 font-semibold uppercase tracking-wider text-xs transition-all duration-300 flex items-center justify-center gap-2 shadow-md disabled:opacity-60"
                 >
-                  {isLoading ? <span>Requesting Nile OTP...</span> : <span>Send One-Time Code</span>}
+                  {isLoading ? <span>Sending Verification Code...</span> : <span>Send One-Time Code</span>}
                 </button>
               </form>
             ) : (

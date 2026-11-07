@@ -74,15 +74,7 @@ export const Navbar: React.FC = () => {
 
           {/* Right Action Icons */}
           <div className="flex items-center space-x-4">
-            {/* Nile Diagnostics Pill */}
-            <button
-              onClick={() => setIsDevDrawerOpen(true)}
-              title={`Commerce connected via Nile Storefront API v1 ${lastRequestId ? `(Req: ${lastRequestId})` : ''}`}
-              className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gold-50 border border-gold-200/80 text-[11px] font-medium text-gold-700 hover:bg-gold-100 transition-colors"
-            >
-              <Activity className="w-3 h-3 text-gold-600 animate-pulse" />
-              <span>Nile API</span>
-            </button>
+
 
             {/* Customer Account Button */}
             <button
@@ -135,15 +127,6 @@ export const Navbar: React.FC = () => {
               >
                 <User className="w-4 h-4 text-gold-500" />
                 <span>{customer ? customer.firstName || 'My Account' : 'Customer Sign In'}</span>
-              </button>
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setIsDevDrawerOpen(true);
-                }}
-                className="text-xs text-gold-600 underline font-medium"
-              >
-                Nile Diagnostics
               </button>
             </div>
           </div>

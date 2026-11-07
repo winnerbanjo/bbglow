@@ -66,7 +66,7 @@ export const StoreStatusBanner: React.FC<{ children: React.ReactNode }> = ({ chi
               Storefront Currently Unavailable
             </h2>
             <p className="text-xs text-ivory-300 leading-relaxed">
-              {status.message || 'The storefront is currently offline on Nile. Please contact support.'}
+              {status.message || 'The storefront is currently offline for maintenance. Please contact support.'}
             </p>
           </div>
 

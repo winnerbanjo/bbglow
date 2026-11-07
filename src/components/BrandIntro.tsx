@@ -20,8 +20,8 @@ export const BrandIntro: React.FC = () => {
     },
     {
       icon: ShieldCheck,
-      title: 'Authoritative Nile Commerce',
-      description: 'Every order, stock level, price calculation, and payment is processed directly through Nile’s enterprise infrastructure.'
+      title: 'Certified Safety & Quality',
+      description: 'Clinically tested and manufactured under strict safety guidelines. Free from parabens, cruelty-free, and dermatologically approved.'
     }
   ];
 

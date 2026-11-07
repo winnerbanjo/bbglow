@@ -68,7 +68,7 @@ export const Hero: React.FC = () => {
               <div className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-gold-600 shrink-0 mt-0.5" />
                 <span className="text-[11px] sm:text-xs text-cocoa-800 font-medium leading-snug">
-                  Nile Authoritative Pricing
+                  Dermatologist Approved
                 </span>
               </div>
               <div className="flex items-start gap-2 col-span-2 sm:col-span-1">

@@ -16,7 +16,7 @@ export const FinalCTA: React.FC = () => {
         </h2>
 
         <p className="text-cocoa-700 text-xs sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed font-normal px-2">
-          Begin the 3-step Flawless Ritual today. Medical-grade clarify and 24-hour velvet hydration, processed securely and swiftly via Nile.
+          Begin the 3-step Flawless Ritual today. Medical-grade clarity and 24-hour velvet hydration delivered directly to your door.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2 sm:pt-4">

@@ -86,7 +86,7 @@ export const DeliverySection: React.FC = () => {
             </div>
           </div>
           <span className="text-xs uppercase tracking-widest text-gold-300 font-semibold bg-cocoa-900 px-4 py-2 rounded-full border border-gold-400/30 whitespace-nowrap">
-            Nile Verified Dispatch
+            Direct Brand Dispatch
           </span>
         </div>
 

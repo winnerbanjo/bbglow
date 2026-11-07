@@ -10,20 +10,20 @@ export const FAQSection: React.FC = () => {
       answer: 'Most clients observe improved skin hydration, clarity, and texture within 7 to 10 days of daily use. More stubborn hyperpigmentation, uneven sun tan, and post-blemish discoloration progressively soften and blend uniformly over 3 to 6 weeks of consistent protocol.'
     },
     {
-      question: 'How is this website powered by Nile Commerce Backend?',
-      answer: 'This entire campaign storefront operates headlessly with Nile. Product details, real-time stock availability, authoritative discounted pricing, the shopping cart drawer, checkout order creation, customer OTP authentication, and reviews are all directly synchronized through the Nile Storefront API v1.'
+      question: 'How does the Flawless daily ritual work?',
+      answer: 'Start with the Flawless Face Wash to gently cleanse and remove impurities without stripping the skin barrier. Follow with the Flawless Body Milk to infuse 24-hour hydration, soften texture, and promote an even, radiant complexion.'
     },
     {
       question: 'Does the Flawless Body Milk contain harsh bleaching chemicals or hydroquinone?',
       answer: 'Strictly no. BB Glow Skincare formulates exclusively with clean, dermatologically respected bio-actives such as alpha arbutin, niacinamide, glutathione, and pure cold-pressed botanical lipids. We never use hydroquinone, steroids, or mercury.'
     },
     {
-      question: 'What payment methods can I use during Nile Checkout?',
-      answer: 'Nile connects to licensed Tier-1 payment gateways including Paystack, Flutterwave, and Stripe. You can pay securely with Nigerian debit/credit cards, bank transfers, USSD, or international Visa and Mastercard.'
+      question: 'What payment methods do you accept?',
+      answer: 'We accept all major secure payment methods including debit/credit cards (Mastercard, Visa, Verve), direct bank transfers, and USSD. International payments in USD, GBP, EUR, and CAD are also fully supported.'
     },
     {
       question: 'Can I purchase items as a guest without creating an account?',
-      answer: 'Yes! Guest shopping is completely supported. Account login via email OTP is optional and allows you to view your Nile order history and track deliveries.'
+      answer: 'Yes! Guest shopping is completely supported. Account login via passwordless email OTP is optional and allows you to view your order history and track past deliveries.'
     },
     {
       question: 'What should I do if I need personalized skincare advice?',
@@ -46,7 +46,7 @@ export const FAQSection: React.FC = () => {
           </h2>
           <div className="w-16 h-0.5 bg-gold-400 mx-auto mt-4" />
           <p className="text-cocoa-600 text-sm sm:text-base leading-relaxed pt-2">
-            Everything you need to know about our formulations, delivery, and Nile commerce integration.
+            Everything you need to know about our formulations, ordering, and delivery.
           </p>
         </div>
 
