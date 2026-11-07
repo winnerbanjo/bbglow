@@ -1,0 +1,138 @@
+import React from 'react';
+import { useStore } from '../context/StoreContext';
+import { AlertTriangle, Clock, RefreshCw, ShieldAlert } from 'lucide-react';
+
+export const StoreStatusBanner: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { status, store, isLoadingStore, storeError, refetchStore } = useStore();
+
+  // 1. Loading State (Brief and graceful)
+  if (isLoadingStore) {
+    return (
+      <div className="min-h-screen bg-ivory-50 flex flex-col items-center justify-center p-6 text-center space-y-4">
+        <div className="w-16 h-16 rounded-full border-2 border-gold-400 border-t-transparent animate-spin mx-auto" />
+        <div className="space-y-1">
+          <p className="font-serif text-xl font-bold text-cocoa-950">B.B. GLOW SKINCARE</p>
+          <p className="text-xs uppercase tracking-widest text-gold-600 font-semibold">
+            Connecting to Nile Commerce Backend...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // 2. Fatal Store Resolution Error (e.g., Failed store verification or unallowed origin)
+  if (storeError && !store) {
+    return (
+      <div className="min-h-screen bg-ivory-100 flex flex-col items-center justify-center p-6 text-center">
+        <div className="max-w-md bg-white p-8 sm:p-10 rounded-3xl shadow-xl border border-ivory-200 space-y-6">
+          <div className="w-16 h-16 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center mx-auto">
+            <ShieldAlert className="w-8 h-8" />
+          </div>
+          <div className="space-y-2">
+            <span className="text-xs font-semibold uppercase tracking-widest text-rose-600">
+              Nile Security & Store Resolution
+            </span>
+            <h2 className="font-serif text-2xl font-bold text-cocoa-950">
+              Storefront Unavailable
+            </h2>
+            <p className="text-xs text-cocoa-700 leading-relaxed">
+              {storeError.message}
+            </p>
+          </div>
+
+          <div className="text-[11px] font-mono text-cocoa-500 bg-ivory-50 p-3 rounded-xl border border-ivory-200 text-left">
+            <p><strong>Code:</strong> {storeError.code}</p>
+            {storeError.requestId && <p><strong>Request ID:</strong> {storeError.requestId}</p>}
+          </div>
+
+          <button
+            onClick={() => refetchStore()}
+            className="w-full py-3.5 px-6 rounded-xl bg-cocoa-900 text-white hover:bg-gold-600 text-xs font-semibold uppercase tracking-wider transition-colors flex items-center justify-center gap-2"
+          >
+            <RefreshCw className="w-4 h-4" />
+            <span>Retry Connection</span>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // 3. Store Status: PAUSED
+  if (status?.status === 'PAUSED') {
+    return (
+      <div className="min-h-screen bg-ivory-50 flex flex-col items-center justify-center p-6 text-center">
+        <div className="max-w-lg bg-white p-8 sm:p-12 rounded-3xl shadow-xl border border-gold-200 space-y-6">
+          <div className="w-16 h-16 rounded-full bg-champagne-light text-gold-700 flex items-center justify-center mx-auto">
+            <Clock className="w-8 h-8" />
+          </div>
+          <div className="space-y-2">
+            <span className="text-xs font-semibold uppercase tracking-widest text-gold-600">
+              {store?.name || 'BB Glow Skincare'}
+            </span>
+            <h2 className="font-serif text-3xl font-bold text-cocoa-950">
+              Under Scheduled Maintenance
+            </h2>
+            <p className="text-xs sm:text-sm text-cocoa-700 leading-relaxed pt-2">
+              {status.notice ||
+                status.message ||
+                'Our storefront is temporarily paused while we restock and update collection inventory. Please check back shortly.'}
+            </p>
+          </div>
+
+          <div className="pt-4 border-t border-ivory-200 flex flex-col sm:flex-row gap-3 justify-center">
+            <a
+              href="https://wa.me/2347042061009"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 bg-emerald-600 text-white rounded-xl text-xs uppercase tracking-wider font-semibold hover:bg-emerald-700 transition-colors"
+            >
+              Contact Support on WhatsApp
+            </a>
+            <button
+              onClick={() => refetchStore()}
+              className="px-6 py-3 border border-cocoa-300 text-cocoa-800 rounded-xl text-xs uppercase tracking-wider font-semibold hover:bg-ivory-100 transition-colors"
+            >
+              Refresh Status
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 4. Store Status: UNAVAILABLE
+  if (status?.status === 'UNAVAILABLE') {
+    return (
+      <div className="min-h-screen bg-cocoa-950 text-ivory-100 flex flex-col items-center justify-center p-6 text-center">
+        <div className="max-w-md p-8 sm:p-10 rounded-3xl bg-cocoa-900 border border-cocoa-800 shadow-2xl space-y-6">
+          <div className="w-16 h-16 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center mx-auto">
+            <AlertTriangle className="w-8 h-8" />
+          </div>
+          <div className="space-y-2">
+            <span className="text-xs font-semibold uppercase tracking-widest text-gold-400">
+              {store?.name || 'BB Glow Skincare'}
+            </span>
+            <h2 className="font-serif text-2xl font-bold text-white">
+              Storefront Currently Unavailable
+            </h2>
+            <p className="text-xs text-ivory-300 leading-relaxed">
+              {status.message || 'The storefront is currently offline on Nile. Please contact support.'}
+            </p>
+          </div>
+
+          <a
+            href="https://wa.me/2347042061009"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-6 py-3 bg-gold-500 text-cocoa-950 rounded-xl text-xs uppercase tracking-wider font-semibold hover:bg-gold-400 transition-colors"
+          >
+            Direct WhatsApp Inquiries
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  // 5. Normal ACTIVE status: render child website components
+  return <>{children}</>;
+};

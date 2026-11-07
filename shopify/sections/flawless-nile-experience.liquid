@@ -1,0 +1,49 @@
+{% comment %}
+  Section: Flawless by BB Glow — Nile Commerce Embedded Section
+  Allows embedding the Flawless landing page within standard Dawn or OS 2.0 themes.
+{% endcomment %}
+
+<div id="flawless-nile-root" class="flawless-headless-wrapper">
+  <div id="root"></div>
+</div>
+
+<script>
+  window.__NILE_CONFIG__ = {
+    apiKey: '{{ section.settings.nile_publishable_key | default: "pk_live_bbglow_production_key" }}',
+    baseUrl: 'https://api.nile.ng/storefront/v1',
+    allowedOrigin: 'https://bbglowskincare.com',
+    storeSlug: 'bbglow',
+    whatsapp: '{{ section.settings.whatsapp_number | default: "+2347042061009" }}'
+  };
+</script>
+
+{{ 'flawless-experience.css' | asset_url | stylesheet_tag }}
+{{ 'flawless-experience.js' | asset_url | script_tag }}
+
+{% schema %}
+{
+  "name": "Flawless Nile Experience",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "nile_publishable_key",
+      "label": "Nile Publishable API Key",
+      "default": "pk_live_bbglow_production_key",
+      "info": "Obtain from Nile Merchant Dashboard (Settings > API Keys)"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_number",
+      "label": "WhatsApp Contact",
+      "default": "+234 704 2061 009"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Flawless Nile Experience"
+    }
+  ]
+}
+{% endschema %}
