@@ -203,28 +203,65 @@ class NileService {
   // ==========================================
 
   public async getStore(): Promise<NileStore> {
-    const store = await this.request<NileStore>('/store');
+    const raw: any = await this.request<any>('/store');
+    const storeData = raw?.responseObject || raw;
 
-    // Verification: Ensure the returned store is BB Glow Skincare
-    const storeName = (store.name || '').toLowerCase();
-    const storeSlug = (store.slug || '').toLowerCase();
+    // Verification: Ensure the returned store is BB Glow / Bibiglow
+    const storeName = (storeData.name || '').toLowerCase();
+    const storeSlug = (storeData.storeUrl || storeData.slug || '').toLowerCase();
     const isBBGlow =
       storeName.includes('bb glow') ||
       storeName.includes('bbglow') ||
+      storeName.includes('bibiglow') ||
       storeSlug.includes('bbglow') ||
+      storeSlug.includes('bibiglow') ||
       storeSlug.includes('bb-glow');
 
     if (!isBBGlow) {
       throw new Error(
-        `[Nile Security Violation] Store verification failed: Authenticated store "${store.name}" (${store.slug}) does not belong to BB Glow Skincare. Architectural policy strictly prohibits falling back to an unrelated store.`
+        `[Nile Security Violation] Store verification failed: Authenticated store "${storeData.name}" (${storeSlug}) does not belong to BB Glow Skincare.`
       );
     }
 
-    return store;
+    const normalized: NileStore = {
+      uuid: storeData.id || storeData.uuid || '33604b88-7c27-46ba-8b1b-af66f364ad20',
+      name: 'BB Glow Skincare',
+      slug: storeSlug || 'bibiglow',
+      logoUrl: storeData.logo || storeData.logoUrl || 'https://bbglowskincare.com/cdn/shop/files/1001408077.png',
+      description: storeData.about || storeData.description || 'Medical-grade radiance skincare formulated for hyperpigmentation-prone and delicate skin.',
+      currency: typeof storeData.currency === 'object' ? storeData.currency?.base || 'NGN' : storeData.currency || 'NGN',
+      supportedCurrencies: ['NGN', 'GBP', 'USD', 'EUR', 'CAD'],
+      contactEmail: storeData.contact?.email || storeData.contactEmail || 'skincarebbglow@gmail.com',
+      contactPhone: storeData.contact?.phone || storeData.contactPhone || '+234 803 053 7332',
+      whatsappPhone: storeData.socials?.whatsappPhone || storeData.contact?.phone || '+234 803 053 7332',
+      address: {
+        line1: storeData.contact?.address || 'Idu industrial railway Fafu Reliable homes B 65',
+        city: storeData.contact?.city || 'Abuja',
+        state: storeData.contact?.state || 'FCT',
+        country: storeData.contact?.country || 'Nigeria'
+      },
+      connectedGateways: storeData.paymentMethods?.connectedGateways?.length ? storeData.paymentMethods.connectedGateways : ['Paystack', 'Flutterwave', 'Stripe'],
+      storeNotice: storeData.storeNotice || 'Experience Flawless by BB Glow — Complimentary Nationwide Delivery on Sets',
+      availability: (storeData.status === 'PAUSED' ? 'PAUSED' : storeData.status === 'UNAVAILABLE' ? 'UNAVAILABLE' : 'ACTIVE')
+    };
+
+    return normalized;
   }
 
   public async getStatus(): Promise<NileStatus> {
-    return this.request<NileStatus>('/status');
+    const raw: any = await this.request<any>('/status');
+    const statusData = raw?.responseObject || raw;
+
+    const rawState = (statusData.state || statusData.store?.status || statusData.status || 'ACTIVE').toUpperCase();
+    const availability: StoreAvailability =
+      rawState === 'PAUSED' ? 'PAUSED' :
+      rawState === 'UNAVAILABLE' || rawState === 'CLOSED' ? 'UNAVAILABLE' : 'ACTIVE';
+
+    return {
+      status: availability,
+      notice: statusData.store?.notice || statusData.notice,
+      message: statusData.message
+    };
   }
 
   // ==========================================
@@ -243,19 +280,36 @@ class NileService {
 
     const qs = query.toString();
     const endpoint = `/products${qs ? `?${qs}` : ''}`;
-    return this.request<NileProduct[]>(endpoint);
+    const raw: any = await this.request<any>(endpoint);
+    const list = Array.isArray(raw) ? raw : (raw?.products || raw?.responseObject?.products || []);
+    if (list.length === 0 && this.config.isMockFallbackEnabled) {
+      return MOCK_PRODUCTS;
+    }
+    return list;
   }
 
   public async getProductByUuid(uuid: string): Promise<NileProduct> {
-    return this.request<NileProduct>(`/products/${uuid}`);
+    const raw: any = await this.request<any>(`/products/${uuid}`);
+    const product = raw?.responseObject || raw;
+    return product;
   }
 
   public async getCategories(): Promise<NileCategory[]> {
-    return this.request<NileCategory[]>('/categories');
+    const raw: any = await this.request<any>('/categories');
+    const list = Array.isArray(raw) ? raw : (raw?.responseObject || raw?.categories || []);
+    if (list.length === 0 && this.config.isMockFallbackEnabled) {
+      return MOCK_CATEGORIES;
+    }
+    return list;
   }
 
   public async getProductsByCategory(categoryId: string | number): Promise<NileProduct[]> {
-    return this.request<NileProduct[]>(`/categories/${categoryId}/products`);
+    const raw: any = await this.request<any>(`/categories/${categoryId}/products`);
+    const list = Array.isArray(raw) ? raw : (raw?.responseObject?.products || raw?.products || []);
+    if (list.length === 0 && this.config.isMockFallbackEnabled) {
+      return MOCK_PRODUCTS;
+    }
+    return list;
   }
 
   // ==========================================
