@@ -184,7 +184,7 @@ export const MOCK_PRODUCTS: NileProduct[] = [
     uuid: 'prod_flawless_complete_set',
     name: 'Flawless Complete Set — The Master Radiance Collection',
     slug: 'flawless-complete-set',
-    description: 'Our ultimate brightening prestige bundle. Includes 2x Flawless Face Wash (200ml) + 1x Flawless Body Milk (500ml) + exclusive BB Glow application treatment sponge and complimentary priority delivery.',
+    description: 'The Flawless Set offers incredible value by combining your essential routine into one complete, long-lasting system that protects their skin barrier. Includes 2x Flawless Face Wash (200ml) + 1x Flawless Body Milk (500ml) + exclusive BB Glow application treatment sponge and complimentary priority delivery.',
     price: 80000,
     discountedPrice: 68000,
     currency: 'NGN',

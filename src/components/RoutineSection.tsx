@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Droplets, Sun, Moon } from 'lucide-react';
+import { ArrowRight, Droplets, Sun, Moon, ShieldCheck } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
 
 export const RoutineSection: React.FC = () => {
@@ -132,6 +132,30 @@ export const RoutineSection: React.FC = () => {
               </div>
             );
           })}
+        </div>
+
+        {/* Routine Value Banner */}
+        <div className="mt-12 sm:mt-16 bg-white rounded-3xl p-6 sm:p-8 border border-ivory-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-4 text-left">
+            <div className="w-12 h-12 rounded-2xl bg-champagne-light border border-gold-200 flex items-center justify-center text-gold-700 shrink-0">
+              <ShieldCheck className="w-6 h-6" />
+            </div>
+            <div className="space-y-1">
+              <span className="text-[11px] uppercase tracking-widest text-gold-700 font-semibold">
+                The Complete System
+              </span>
+              <p className="font-serif text-base sm:text-lg text-cocoa-950 font-bold max-w-2xl leading-snug">
+                The Flawless Set offers incredible value by combining your essential routine into one complete, long-lasting system that protects their skin barrier.
+              </p>
+            </div>
+          </div>
+          <a
+            href="#complete-set"
+            className="px-6 py-3.5 bg-cocoa-900 text-ivory-100 hover:bg-gold-600 rounded-full text-xs uppercase tracking-wider font-semibold transition-colors shrink-0 shadow-md flex items-center gap-2"
+          >
+            <span>Explore Complete Set</span>
+            <ArrowRight className="w-4 h-4" />
+          </a>
         </div>
 
       </div>

@@ -68,6 +68,13 @@ export const FeaturedCompleteSet: React.FC = () => {
                 </p>
               </div>
 
+              {/* Value Proposition Callout */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-gold-500/10 border border-gold-400/30 backdrop-blur-sm">
+                <p className="font-serif italic text-sm sm:text-base text-gold-200 leading-relaxed">
+                  The Flawless Set offers incredible value by combining your essential routine into one complete, long-lasting system that protects their skin barrier.
+                </p>
+              </div>
+
               {/* Description */}
               <p className="text-ivory-300 text-xs sm:text-sm md:text-base leading-relaxed max-w-xl font-normal">
                 Curated by BB Glow for customers seeking an uncompromising transformation. Combines intensive facial purification with high-potency body milk to erase persistent dark patches and deliver 24-hour head-to-toe glow.
