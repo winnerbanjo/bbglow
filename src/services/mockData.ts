@@ -134,6 +134,92 @@ export const MOCK_PRODUCTS: NileProduct[] = [
     isBundle: false
   },
   {
+    uuid: 'prod_flawless_toner_200ml',
+    name: 'Flawless Toner – 200ml',
+    slug: 'flawless-toner-200ml',
+    description: 'Refresh and tone your complexion with a formula designed to cleanse, tone and promote brighter-looking skin. Restores optimal skin pH balance, tightens pores, and primes the skin barrier for enhanced nutrient absorption.',
+    price: 22000,
+    discountedPrice: 20000,
+    currency: 'NGN',
+    stock: 40,
+    status: 'ACTIVE',
+    images: [
+      '/images/flawless-face-wash-front.jpg',
+      '/images/flawless-face-wash-back.jpg'
+    ],
+    variants: [
+      {
+        uuid: 'var_toner_200ml',
+        title: '200ml Bottle',
+        sku: 'BBG-FLW-TN200',
+        price: 22000,
+        discountedPrice: 20000,
+        stock: 40,
+        options: { Size: '200ml' }
+      }
+    ],
+    attributes: {
+      'Skin Type': 'All skin types, dull, uneven tone',
+      'Volume': '200ml',
+      'Function': 'Cleanse, Tone & Refresh',
+      'Texture': 'Weightless Hydrating Water'
+    },
+    categories: [MOCK_CATEGORIES[0]],
+    size: '200ml',
+    ingredients: 'Aqua, Witch Hazel Extract, Niacinamide, Glycerin, Rosewater, Glutathione, Allantoin, Panthenol (Pro-Vitamin B5), Citric Acid, Phenoxyethanol.',
+    benefits: [
+      'Refreshes and tones complexion instantly',
+      'Gently sweeps away lingering micro-impurities',
+      'Prepares skin for optimal moisture retention and cellular rejuvenation',
+      'Helps promote clearer, visibly brighter facial tone'
+    ],
+    usageInstructions: 'After cleansing with Flawless Face Wash, dispense onto a cotton pad or palms and gently press over face and neck. Allow to absorb before applying moisturiser.',
+    isBundle: false
+  },
+  {
+    uuid: 'prod_flawless_facecream_50g',
+    name: 'Flawless Face Cream – 50g',
+    slug: 'flawless-face-cream-50g',
+    description: 'Complete your facial skincare routine with a moisturising cream designed to support clear, radiant-looking skin. Locks in deep moisture, fortifies skin barrier resilience, and imparts a silky, luminous glow without greasiness.',
+    price: 25000,
+    discountedPrice: 23000,
+    currency: 'NGN',
+    stock: 35,
+    status: 'ACTIVE',
+    images: [
+      '/images/flawless-body-milk-lifestyle.webp',
+      '/images/flawless-body-milk-front.jpg'
+    ],
+    variants: [
+      {
+        uuid: 'var_facecream_50g',
+        title: '50g Luxury Jar',
+        sku: 'BBG-FLW-FC50',
+        price: 25000,
+        discountedPrice: 23000,
+        stock: 35,
+        options: { Size: '50g' }
+      }
+    ],
+    attributes: {
+      'Skin Type': 'All skin types, hyperpigmentation-prone face',
+      'Net Weight': '50g / 1.76 oz',
+      'Function': 'Moisturise & Radiance Support',
+      'Finish': 'Velvet Glow, Non-Greasy'
+    },
+    categories: [MOCK_CATEGORIES[0]],
+    size: '50g',
+    ingredients: 'Aqua, Caprylic/Capric Triglyceride, Niacinamide, Glutathione, Shea Butter, Alpha-Arbutin, Sodium Hyaluronate, Vitamin E (Tocopheryl Acetate), Licorice Extract, Dimethicone, Cetearyl Olivate, Phenoxyethanol.',
+    benefits: [
+      'Deeply moisturises and locks in long-lasting facial hydration',
+      'Supports clear, luminous, and radiant-looking skin',
+      'Fortifies and protects the delicate facial skin barrier',
+      'Lightweight velvet emulsion suitable under makeup or sunscreen'
+    ],
+    usageInstructions: 'Smooth a dime-sized amount over clean face and neck every morning and evening following toner. During daytime, finish with broad-spectrum sunscreen.',
+    isBundle: false
+  },
+  {
     uuid: 'prod_flawless_starter_set',
     name: 'Flawless Starter Set — Daily Face & Body Glow Duo',
     slug: 'flawless-starter-set',
@@ -182,13 +268,13 @@ export const MOCK_PRODUCTS: NileProduct[] = [
   },
   {
     uuid: 'prod_flawless_complete_set',
-    name: 'Flawless Complete Set — The Master Radiance Collection',
-    slug: 'flawless-complete-set',
-    description: 'The Flawless Set offers incredible value by combining your essential routine into one complete, long-lasting system that protects their skin barrier. Includes 2x Flawless Face Wash (200ml) + 1x Flawless Body Milk (500ml) + exclusive BB Glow application treatment sponge and complimentary priority delivery.',
-    price: 80000,
-    discountedPrice: 68000,
+    name: 'Flawless Radiance 4-Piece Skincare Set by BB Glow',
+    slug: 'flawless-radiance-4-piece-skincare-set-by-bb',
+    description: 'The Flawless Set offers incredible value by combining your essential routine into one complete, long-lasting system that protects their skin barrier. Includes Flawless Face Wash (200ml), Flawless Toner (200ml), Flawless Face Cream (50g), and Flawless Body Milk (500ml). Four essentials. One beautiful glow.',
+    price: 107000,
+    discountedPrice: 70000,
     currency: 'NGN',
-    stock: 18,
+    stock: 20,
     status: 'ACTIVE',
     images: [
       '/images/flawless-body-milk-front.jpg',
@@ -198,32 +284,37 @@ export const MOCK_PRODUCTS: NileProduct[] = [
     variants: [
       {
         uuid: 'var_complete_set_master',
-        title: 'Complete Prestige Set',
-        sku: 'BBG-SET-COMPLETE',
-        price: 80000,
-        discountedPrice: 68000,
-        stock: 18,
-        options: { Set: 'Master' }
+        title: 'Complete 4-Piece Radiance Set',
+        sku: 'BBG-SET-4PIECE',
+        price: 107000,
+        discountedPrice: 70000,
+        stock: 20,
+        options: { Set: '4-Piece Complete' }
       }
     ],
     attributes: {
-      'Tier': 'Flagship Prestige Collection',
-      'Includes': '2x Face Wash (200ml) + 1x Body Milk (500ml) + Silk Sponge',
-      'Savings': '₦12,000 Bundle Savings + Free Express Shipping'
+      'Collection': 'Complete 4-Piece Radiance System',
+      'Includes': 'Face Wash (200ml) + Toner (200ml) + Face Cream (50g) + Body Milk (500ml)',
+      'Savings': '₦37,000 Complete Set Savings + Free Priority Dispatch',
+      'Routine': 'Simple 4-Step Everyday Self-Care Ritual'
     },
     categories: [MOCK_CATEGORIES[0], MOCK_CATEGORIES[3]],
-    size: 'Complete Ritual',
-    ingredients: 'Refer to individual product packaging for Flawless Face Wash and Flawless Body Milk.',
+    size: '4-Piece Complete Collection',
+    ingredients: 'Refer to individual product packaging: Face Wash (200ml), Toner (200ml), Face Cream (50g), Body Milk (500ml). Enriched with Niacinamide, Glutathione, Vitamin E, Alpha-Arbutin & Retinol.',
     benefits: [
-      'Full 60-day intensive brightening and hydration protocol',
-      'Substantially improves skin clarity and radiance index',
-      'Complimentary priority courier handling within Nigeria and international dispatch',
-      'Packaged in limited edition gold-embossed presentation box'
+      'Complete face and body care in one convenient luxury bundle',
+      'A simple, harmonious four-step skincare routine',
+      'Supports brighter, smoother and more radiant-looking skin',
+      'Helps cleanse, refresh, moisturise and protect your skin barrier',
+      'Suitable for all skin types',
+      'Exceptional value at ₦70,000'
     ],
-    usageInstructions: 'Follow the morning and evening Flawless protocol consistently for 6-8 weeks for radiant, smooth, and unified skin tone.',
+    usageInstructions: 'Step 1: Cleanse with Flawless Face Wash. Step 2: Tone with Flawless Toner. Step 3: Moisturise with Flawless Face Cream. Step 4: Nourish body with Flawless Body Milk after bathing. During the day, finish with a broad-spectrum sunscreen.',
     isBundle: true,
     bundleItems: [
-      { productUuid: 'prod_flawless_facewash_200ml', productName: 'Flawless Face Wash – 200ml', quantity: 2 },
+      { productUuid: 'prod_flawless_facewash_200ml', productName: 'Flawless Face Wash – 200ml', quantity: 1 },
+      { productUuid: 'prod_flawless_toner_200ml', productName: 'Flawless Toner – 200ml', quantity: 1 },
+      { productUuid: 'prod_flawless_facecream_50g', productName: 'Flawless Face Cream – 50g', quantity: 1 },
       { productUuid: 'prod_flawless_bodymilk_500ml', productName: 'Flawless Body Milk – 500ml', quantity: 1 }
     ]
   }

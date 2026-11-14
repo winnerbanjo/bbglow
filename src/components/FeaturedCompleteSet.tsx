@@ -61,10 +61,10 @@ export const FeaturedCompleteSet: React.FC = () => {
               {/* Title & Tagline */}
               <div className="space-y-2 sm:space-y-3">
                 <h2 className="font-serif text-3xl sm:text-5xl font-bold text-white tracking-tight leading-tight">
-                  The Flawless <span className="italic font-normal text-gold-400">Complete Set</span>
+                  Flawless Radiance <span className="italic font-normal text-gold-400">4-Piece Set</span>
                 </h2>
                 <p className="font-serif italic text-base sm:text-xl text-ivory-200">
-                  Total Radiance System • Face Wash, Body Milk & Silk Treatment Protocol
+                  Four Essentials. One Beautiful Glow. • Complete Face & Body Collection
                 </p>
               </div>
 
@@ -77,28 +77,40 @@ export const FeaturedCompleteSet: React.FC = () => {
 
               {/* Description */}
               <p className="text-ivory-300 text-xs sm:text-sm md:text-base leading-relaxed max-w-xl font-normal">
-                Curated by BB Glow for customers seeking an uncompromising transformation. Combines intensive facial purification with high-potency body milk to erase persistent dark patches and deliver 24-hour head-to-toe glow.
+                Your journey to beautiful, radiant-looking skin starts with the right routine. Designed by BB Glow to cleanse, tone, moisturise and enhance your natural radiance from morning to evening.
               </p>
 
-              {/* Bundle Highlights */}
-              <div className="space-y-2.5 sm:space-y-3 pt-1">
+              {/* Bundle Highlights - 4 Pieces */}
+              <div className="space-y-2 sm:space-y-2.5 pt-1">
                 <div className="flex items-start sm:items-center gap-2.5 text-xs sm:text-sm text-ivory-200">
                   <div className="w-5 h-5 rounded-full bg-gold-500/20 text-gold-400 flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">
                     <Check className="w-3.5 h-3.5" />
                   </div>
-                  <span><strong>Full 60-Day Transformation:</strong> 2x Face Wash (200ml) + 1x Jumbo Body Milk (500ml)</span>
+                  <span><strong>1. Flawless Face Wash (200ml):</strong> Enriched with Niacinamide, Glutathione & Vitamin E</span>
                 </div>
                 <div className="flex items-start sm:items-center gap-2.5 text-xs sm:text-sm text-ivory-200">
                   <div className="w-5 h-5 rounded-full bg-gold-500/20 text-gold-400 flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">
-                    <Gift className="w-3.5 h-3.5" />
+                    <Check className="w-3.5 h-3.5" />
                   </div>
-                  <span><strong>Complimentary Gift:</strong> Gold-embossed gift packaging + Treatment sponge</span>
+                  <span><strong>2. Flawless Toner (200ml):</strong> Refreshes, tones and promotes brighter-looking skin</span>
                 </div>
                 <div className="flex items-start sm:items-center gap-2.5 text-xs sm:text-sm text-ivory-200">
+                  <div className="w-5 h-5 rounded-full bg-gold-500/20 text-gold-400 flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">
+                    <Check className="w-3.5 h-3.5" />
+                  </div>
+                  <span><strong>3. Flawless Face Cream (50g):</strong> Moisturising cream supporting clear, radiant skin</span>
+                </div>
+                <div className="flex items-start sm:items-center gap-2.5 text-xs sm:text-sm text-ivory-200">
+                  <div className="w-5 h-5 rounded-full bg-gold-500/20 text-gold-400 flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">
+                    <Check className="w-3.5 h-3.5" />
+                  </div>
+                  <span><strong>4. Flawless Body Milk (500ml):</strong> Jumbo 500ml lotion for velvety, soft, glowing skin</span>
+                </div>
+                <div className="flex items-start sm:items-center gap-2.5 text-xs sm:text-sm text-gold-300 pt-1">
                   <div className="w-5 h-5 rounded-full bg-gold-500/20 text-gold-400 flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">
                     <Truck className="w-3.5 h-3.5" />
                   </div>
-                  <span><strong>Priority Logistics:</strong> Fast dispatch across Nigeria & Worldwide</span>
+                  <span><strong>Complimentary Dispatch:</strong> Fast shipping across Nigeria & International</span>
                 </div>
               </div>
 

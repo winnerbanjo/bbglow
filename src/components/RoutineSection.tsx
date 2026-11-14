@@ -1,43 +1,55 @@
 import React from 'react';
-import { ArrowRight, Droplets, Sun, Moon, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Droplets, Sparkles, Sun, Moon, ShieldCheck } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
 
 export const RoutineSection: React.FC = () => {
   const { setSelectedProduct, products } = useStore();
 
   const faceWash = products.find((p) => p.slug.includes('face-wash')) || products[0];
-  const bodyMilk = products.find((p) => p.slug.includes('body-milk')) || products[1];
+  const toner = products.find((p) => p.slug.includes('toner')) || products[1];
+  const faceCream = products.find((p) => p.slug.includes('face-cream')) || products[2];
+  const bodyMilk = products.find((p) => p.slug.includes('body-milk')) || products[3];
 
   const steps = [
     {
       step: '01',
-      title: 'Purify & Clarify',
+      title: 'Cleanse',
       productName: 'Flawless Face Wash (200ml)',
       time: 'Morning & Night',
       icon: Droplets,
-      description: 'Lather a nickel-sized amount with lukewarm water. Dissolves micro-pollutants and dead cells without disturbing the delicate skin barrier.',
+      description: 'Start fresh with a cleanser enriched with Niacinamide, Glutathione and Vitamin E. Helps remove daily impurities while leaving your skin feeling refreshed.',
       product: faceWash,
       image: '/images/flawless-face-wash-front.jpg'
     },
     {
       step: '02',
-      title: 'Damp Skin Activation',
-      productName: 'Thermal Skin Mist or Soft Pat',
-      time: 'Immediate Post-Shower',
-      icon: Sun,
-      description: 'Leave body skin slightly damp after showering. Hydrated epidermal cells absorb lipid bio-actives with 300% greater efficiency.',
-      product: null,
-      image: null
+      title: 'Tone',
+      productName: 'Flawless Toner (200ml)',
+      time: 'Post-Cleansing',
+      icon: Sparkles,
+      description: 'Refresh and tone your complexion with a formula designed to cleanse, tone and promote brighter-looking skin.',
+      product: toner,
+      image: '/images/flawless-face-wash-back.jpg'
     },
     {
       step: '03',
-      title: 'Illuminate & Seal',
-      productName: 'Flawless Body Milk (500ml)',
-      time: 'Daily Body Protocol',
-      icon: Moon,
-      description: 'Smooth generously over the body in upward motions. Alpha arbutin and whipped shea nourish dry zones, locking in golden luminescence.',
-      product: bodyMilk,
+      title: 'Moisturise',
+      productName: 'Flawless Face Cream (50g)',
+      time: 'Face Hydration',
+      icon: Sun,
+      description: 'Complete your facial skincare routine with a moisturising cream designed to support clear, radiant-looking skin.',
+      product: faceCream,
       image: '/images/flawless-body-milk-lifestyle.webp'
+    },
+    {
+      step: '04',
+      title: 'Nourish',
+      productName: 'Flawless Body Milk (500ml)',
+      time: 'Body Protocol',
+      icon: Moon,
+      description: 'Treat your body to nourishing moisture with a lotion enriched with Niacinamide, Glutathione and Vitamin E, supporting soft, healthy-looking skin.',
+      product: bodyMilk,
+      image: '/images/flawless-body-milk-front.jpg'
     }
   ];
 
@@ -52,16 +64,16 @@ export const RoutineSection: React.FC = () => {
             <span>The Daily Protocol</span>
           </div>
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-cocoa-950">
-            The 3-Step Flawless Ritual
+            The 4-Step Flawless Ritual
           </h2>
           <div className="w-12 sm:w-16 h-0.5 bg-gold-400 mx-auto mt-2 sm:mt-4" />
           <p className="text-cocoa-700 text-xs sm:text-sm md:text-base leading-relaxed pt-2 px-2">
-            Formulated to work synergistically. Consistent application over 21 days creates a unified, luminous skin transformation.
+            Four Essentials. One Beautiful Glow. From your morning routine to your evening self-care ritual, each product works as part of a simple four-step experience. During the day, finish with a broad-spectrum sunscreen.
           </p>
         </div>
 
-        {/* Steps Grid - Stacked on Mobile, 3 Cols on Desktop */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 relative">
+        {/* Steps Grid - Stacked on Mobile, 2 on Tablet, 4 on Desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 relative">
           {steps.map((s, idx) => {
             const Icon = s.icon;
             return (
