@@ -9,7 +9,10 @@ export const FeaturedCompleteSet: React.FC = () => {
 
   // Find the complete set or flagship bundle from Nile products
   const completeSet =
+    products.find((p) => p.uuid === 'prod_flawless_complete_set') ||
+    products.find((p) => p.slug === 'flawless-radiance-4-piece-skincare-set-by-bb') ||
     products.find((p) => p.slug === 'flawless-complete-set') ||
+    products.find((p) => p.isBundle && (p.discountedPrice === 70000 || p.price === 70000)) ||
     products.find((p) => p.isBundle) ||
     products[0];
 
@@ -170,26 +173,21 @@ export const FeaturedCompleteSet: React.FC = () => {
 
             {/* Right Visual Frame */}
             <div className="lg:col-span-5 flex justify-center w-full">
-              <div className="relative w-full max-w-xs sm:max-w-sm aspect-[4/5] rounded-3xl bg-gradient-to-tr from-cocoa-800 to-cocoa-900 border border-gold-500/30 p-6 sm:p-8 flex flex-col items-center justify-center shadow-2xl group">
-                <div className="absolute top-4 right-4 bg-gold-400 text-cocoa-950 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
-                  Prestige Set
+              <div className="relative w-full max-w-sm sm:max-w-md rounded-3xl bg-cocoa-900/60 border border-gold-500/30 p-3 sm:p-5 flex flex-col items-center justify-center shadow-2xl group overflow-hidden">
+                <div className="absolute top-4 right-4 z-10 bg-gold-400 text-cocoa-950 text-[10px] sm:text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
+                  Complete 4-Piece Set
                 </div>
 
-                {/* Imagery Montage */}
-                <div className="relative w-full h-full flex items-center justify-center py-4">
+                {/* Real 4-Piece Flawless Set Imagery */}
+                <div className="relative w-full aspect-[4/3] sm:aspect-square flex items-center justify-center overflow-hidden rounded-2xl bg-cocoa-950/40">
                   <img
-                    src="/images/flawless-body-milk-front.jpg"
-                    alt="Flawless Body Milk"
-                    className="w-36 sm:w-44 object-contain rounded-2xl drop-shadow-2xl transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <img
-                    src="/images/flawless-face-wash-front.jpg"
-                    alt="Flawless Face Wash"
-                    className="w-24 sm:w-28 absolute -bottom-2 -left-2 object-contain rounded-xl drop-shadow-xl transition-transform duration-500 group-hover:-translate-y-2"
+                    src="/images/flawless-4piece-set.webp"
+                    alt="Flawless Radiance 4-Piece Skincare Set by BB Glow"
+                    className="w-full h-full object-cover sm:object-contain rounded-2xl transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
 
-                <div className="text-center pt-2 sm:pt-4">
+                <div className="text-center pt-3 sm:pt-4">
                   <p className="text-[11px] sm:text-xs uppercase tracking-widest text-gold-400 font-semibold">
                     100% Guaranteed Authentic
                   </p>

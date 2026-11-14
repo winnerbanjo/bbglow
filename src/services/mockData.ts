@@ -277,8 +277,9 @@ export const MOCK_PRODUCTS: NileProduct[] = [
     stock: 20,
     status: 'ACTIVE',
     images: [
+      '/images/flawless-4piece-set.webp',
       '/images/flawless-body-milk-front.jpg',
-      'https://bbglowskincare.com/cdn/shop/files/1001613909.png?v=1789391214',
+      '/images/flawless-face-wash-front.jpg',
       '/images/flawless-body-milk-lifestyle.webp'
     ],
     variants: [
