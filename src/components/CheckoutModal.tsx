@@ -87,6 +87,10 @@ export const CheckoutModal: React.FC = () => {
       if (authUrl) {
         setGatewayUrl(authUrl);
         setStep('gateway_redirect');
+        // Automatically redirect to Paystack payment gateway
+        setTimeout(() => {
+          window.location.href = authUrl;
+        }, 800);
       } else {
         setStep('status');
       }
@@ -109,61 +113,64 @@ export const CheckoutModal: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-cocoa-950/75 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-fade-in">
+    <div className="fixed inset-0 z-50 overflow-y-auto sm:overflow-hidden bg-cocoa-950/75 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6 animate-fade-in">
       <div
-        className="relative bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-10 shadow-2xl border border-ivory-200 animate-slide-up"
+        className="relative bg-white rounded-t-3xl sm:rounded-3xl max-w-2xl w-full max-h-[94dvh] sm:max-h-[90vh] flex flex-col shadow-2xl border border-ivory-200 animate-slide-up overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button */}
-        <button
-          onClick={() => {
-            setIsCheckoutOpen(false);
-            setStep('details');
-          }}
-          className="absolute top-5 right-5 p-2 text-cocoa-400 hover:text-cocoa-900 rounded-full hover:bg-ivory-100 transition-colors"
-          aria-label="Close checkout"
-        >
-          <X className="w-5 h-5" />
-        </button>
+        {/* Modal Header */}
+        <div className="px-5 py-3.5 sm:px-8 sm:py-5 border-b border-ivory-200/80 bg-white/95 backdrop-blur-md flex items-center justify-between shrink-0">
+          <div className="space-y-0.5">
+            <div className="flex items-center gap-1.5 text-[10px] sm:text-xs uppercase tracking-widest text-gold-600 font-semibold">
+              <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold-600 shrink-0" />
+              <span>Encrypted Secure Checkout</span>
+            </div>
+            <h3 className="font-serif text-xl sm:text-2xl font-bold text-cocoa-950">
+              {step === 'details' && 'Secure Delivery & Payment'}
+              {step === 'processing' && 'Processing Your Order'}
+              {step === 'gateway_redirect' && 'Complete Your Payment'}
+              {step === 'status' && 'Order Confirmation'}
+            </h3>
+          </div>
+
+          <button
+            onClick={() => {
+              setIsCheckoutOpen(false);
+              setStep('details');
+            }}
+            className="p-2 sm:p-2.5 text-cocoa-400 hover:text-cocoa-900 rounded-full hover:bg-ivory-100 transition-colors -mr-1"
+            aria-label="Close checkout"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
 
         {/* STEP 1: CUSTOMER & DELIVERY DETAILS */}
         {step === 'details' && (
-          <div className="space-y-6">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-gold-600 font-semibold">
-                <ShieldCheck className="w-4 h-4" />
-                <span>Encrypted Secure Checkout</span>
-              </div>
-              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-cocoa-950">
-                Secure Delivery & Payment
-              </h3>
-              <p className="text-xs text-cocoa-600">
-                Your order is securely encrypted and validated in real time.
-              </p>
-            </div>
+          <form onSubmit={handleCheckoutSubmit} className="flex-1 flex flex-col min-h-0">
+            {/* Scrollable Form Body */}
+            <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-4 sm:px-8 sm:py-6 space-y-5">
+              {errorMsg && (
+                <div className="p-3.5 sm:p-4 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-start gap-2.5">
+                  <AlertCircle className="w-4 h-4 shrink-0 text-rose-600 mt-0.5" />
+                  <span>{errorMsg}</span>
+                </div>
+              )}
 
-            {errorMsg && (
-              <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-start gap-2.5">
-                <AlertCircle className="w-4 h-4 shrink-0 text-rose-600 mt-0.5" />
-                <span>{errorMsg}</span>
-              </div>
-            )}
-
-            {/* Order Brief Summary */}
-            <div className="bg-ivory-50 p-4 rounded-2xl border border-ivory-200 flex items-center justify-between text-xs">
-              <div>
-                <span className="font-medium text-cocoa-800">
-                  {cart?.itemCount} {cart?.itemCount === 1 ? 'item' : 'items'} in Bag
+              {/* Order Brief Summary */}
+              <div className="bg-ivory-50 p-3.5 sm:p-4 rounded-2xl border border-ivory-200 flex items-center justify-between text-xs">
+                <div>
+                  <span className="font-medium text-cocoa-800">
+                    {cart?.itemCount} {cart?.itemCount === 1 ? 'item' : 'items'} in Bag
+                  </span>
+                  <span className="text-cocoa-400"> • </span>
+                  <span className="text-cocoa-600">Complimentary nationwide shipping</span>
+                </div>
+                <span className="font-serif text-base font-bold text-cocoa-950">
+                  {formatPrice(cart?.total || 0)}
                 </span>
-                <span className="text-cocoa-400"> • </span>
-                <span className="text-cocoa-600">Complimentary nationwide shipping</span>
               </div>
-              <span className="font-serif text-base font-bold text-cocoa-950">
-                {formatPrice(cart?.total || 0)}
-              </span>
-            </div>
 
-            <form onSubmit={handleCheckoutSubmit} className="space-y-4">
               {/* Contact Information */}
               <div className="space-y-3">
                 <h4 className="text-xs font-semibold uppercase tracking-wider text-cocoa-900 border-b border-ivory-200 pb-1">
@@ -179,7 +186,7 @@ export const CheckoutModal: React.FC = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="client@example.com"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-ivory-300 text-xs text-cocoa-900 focus:outline-none focus:border-gold-500"
+                    className="w-full h-11 sm:h-10 px-3.5 rounded-xl border border-ivory-300 text-base sm:text-xs text-cocoa-900 focus:outline-none focus:border-gold-500 bg-white"
                   />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -193,7 +200,7 @@ export const CheckoutModal: React.FC = () => {
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                       placeholder="e.g. Amina"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-ivory-300 text-xs text-cocoa-900 focus:outline-none focus:border-gold-500"
+                      className="w-full h-11 sm:h-10 px-3.5 rounded-xl border border-ivory-300 text-base sm:text-xs text-cocoa-900 focus:outline-none focus:border-gold-500 bg-white"
                     />
                   </div>
                   <div>
@@ -206,7 +213,7 @@ export const CheckoutModal: React.FC = () => {
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
                       placeholder="e.g. Ibrahim"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-ivory-300 text-xs text-cocoa-900 focus:outline-none focus:border-gold-500"
+                      className="w-full h-11 sm:h-10 px-3.5 rounded-xl border border-ivory-300 text-base sm:text-xs text-cocoa-900 focus:outline-none focus:border-gold-500 bg-white"
                     />
                   </div>
                 </div>
@@ -220,13 +227,13 @@ export const CheckoutModal: React.FC = () => {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+234 800 000 0000"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-ivory-300 text-xs text-cocoa-900 focus:outline-none focus:border-gold-500"
+                    className="w-full h-11 sm:h-10 px-3.5 rounded-xl border border-ivory-300 text-base sm:text-xs text-cocoa-900 focus:outline-none focus:border-gold-500 bg-white"
                   />
                 </div>
               </div>
 
               {/* Delivery Address */}
-              <div className="space-y-3 pt-2">
+              <div className="space-y-3 pt-1">
                 <h4 className="text-xs font-semibold uppercase tracking-wider text-cocoa-900 border-b border-ivory-200 pb-1">
                   2. Shipping Address
                 </h4>
@@ -240,7 +247,7 @@ export const CheckoutModal: React.FC = () => {
                     value={line1}
                     onChange={(e) => setLine1(e.target.value)}
                     placeholder="e.g. 14 Adeola Odeku Street, Victoria Island"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-ivory-300 text-xs text-cocoa-900 focus:outline-none focus:border-gold-500"
+                    className="w-full h-11 sm:h-10 px-3.5 rounded-xl border border-ivory-300 text-base sm:text-xs text-cocoa-900 focus:outline-none focus:border-gold-500 bg-white"
                   />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -253,7 +260,7 @@ export const CheckoutModal: React.FC = () => {
                       required
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-ivory-300 text-xs text-cocoa-900 focus:outline-none focus:border-gold-500"
+                      className="w-full h-11 sm:h-10 px-3.5 rounded-xl border border-ivory-300 text-base sm:text-xs text-cocoa-900 focus:outline-none focus:border-gold-500 bg-white"
                     />
                   </div>
                   <div>
@@ -265,7 +272,7 @@ export const CheckoutModal: React.FC = () => {
                       required
                       value={state}
                       onChange={(e) => setState(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-ivory-300 text-xs text-cocoa-900 focus:outline-none focus:border-gold-500"
+                      className="w-full h-11 sm:h-10 px-3.5 rounded-xl border border-ivory-300 text-base sm:text-xs text-cocoa-900 focus:outline-none focus:border-gold-500 bg-white"
                     />
                   </div>
                   <div>
@@ -275,7 +282,7 @@ export const CheckoutModal: React.FC = () => {
                     <select
                       value={country}
                       onChange={(e) => setCountry(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-ivory-300 text-xs text-cocoa-900 focus:outline-none focus:border-gold-500 bg-white"
+                      className="w-full h-11 sm:h-10 px-3 rounded-xl border border-ivory-300 text-base sm:text-xs text-cocoa-900 focus:outline-none focus:border-gold-500 bg-white"
                     >
                       <option value="Nigeria">Nigeria</option>
                       <option value="United Kingdom">United Kingdom</option>
@@ -285,25 +292,25 @@ export const CheckoutModal: React.FC = () => {
                   </div>
                 </div>
               </div>
+            </div>
 
-              {/* Submit CTA */}
-              <div className="pt-4">
-                <button
-                  type="submit"
-                  className="w-full py-4 px-6 rounded-2xl bg-cocoa-900 text-ivory-100 hover:bg-gold-600 font-semibold uppercase tracking-wider text-xs transition-all duration-300 flex items-center justify-center gap-2.5 shadow-lg group"
-                >
-                  <Lock className="w-4 h-4 text-gold-400" />
-                  <span>Proceed to Secure Payment</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </button>
-              </div>
-            </form>
-          </div>
+            {/* Pinned Sticky Bottom Submit CTA */}
+            <div className="p-4 sm:px-8 sm:py-4 bg-white/95 backdrop-blur-md border-t border-ivory-200 shadow-[0_-4px_16px_rgba(0,0,0,0.06)] shrink-0">
+              <button
+                type="submit"
+                className="w-full py-3.5 sm:py-4 px-6 rounded-2xl bg-cocoa-900 text-ivory-100 hover:bg-gold-600 font-semibold uppercase tracking-wider text-xs transition-all duration-300 flex items-center justify-center gap-2.5 shadow-lg group active:scale-[0.99]"
+              >
+                <Lock className="w-4 h-4 text-gold-400" />
+                <span>Proceed to Secure Payment • {formatPrice(cart?.total || 0)}</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </button>
+            </div>
+          </form>
         )}
 
         {/* STEP 2: PROCESSING ORDER */}
         {step === 'processing' && (
-          <div className="py-16 text-center space-y-6">
+          <div className="flex-1 overflow-y-auto px-6 py-16 text-center space-y-6">
             <Loader2 className="w-12 h-12 text-gold-600 animate-spin mx-auto" />
             <div className="space-y-2">
               <h3 className="font-serif text-2xl font-bold text-cocoa-950">
@@ -318,7 +325,7 @@ export const CheckoutModal: React.FC = () => {
 
         {/* STEP 3: GATEWAY REDIRECT PROMPT */}
         {step === 'gateway_redirect' && (
-          <div className="py-8 text-center space-y-6">
+          <div className="flex-1 overflow-y-auto px-5 py-8 sm:px-8 text-center space-y-6">
             <div className="w-16 h-16 rounded-full bg-gold-100 text-gold-700 mx-auto flex items-center justify-center">
               <CreditCard className="w-8 h-8" />
             </div>
@@ -344,7 +351,7 @@ export const CheckoutModal: React.FC = () => {
                   href={gatewayUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-4 px-6 rounded-2xl bg-cocoa-900 text-ivory-100 hover:bg-gold-600 font-semibold uppercase tracking-wider text-xs transition-all duration-300 flex items-center justify-center gap-2 shadow-lg"
+                  className="w-full py-4 px-6 rounded-2xl bg-cocoa-900 text-ivory-100 hover:bg-gold-600 font-semibold uppercase tracking-wider text-xs transition-all duration-300 flex items-center justify-center gap-2 shadow-lg active:scale-[0.99]"
                 >
                   <span>Open Payment Gateway Window</span>
                   <ExternalLink className="w-4 h-4" />
@@ -356,16 +363,16 @@ export const CheckoutModal: React.FC = () => {
                 <p className="text-[11px] text-cocoa-500 uppercase tracking-wider font-semibold">
                   Test Gateway Callback Simulation:
                 </p>
-                <div className="flex justify-center gap-2">
+                <div className="flex justify-center gap-2 flex-wrap">
                   <button
                     onClick={() => handleSimulatePaymentStatus('paid')}
-                    className="px-4 py-2 rounded-lg bg-emerald-600 text-white text-xs font-semibold hover:bg-emerald-700 transition-colors"
+                    className="px-4 py-2.5 rounded-lg bg-emerald-600 text-white text-xs font-semibold hover:bg-emerald-700 transition-colors"
                   >
                     Simulate Payment Success
                   </button>
                   <button
                     onClick={() => handleSimulatePaymentStatus('failed')}
-                    className="px-4 py-2 rounded-lg bg-rose-600 text-white text-xs font-semibold hover:bg-rose-700 transition-colors"
+                    className="px-4 py-2.5 rounded-lg bg-rose-600 text-white text-xs font-semibold hover:bg-rose-700 transition-colors"
                   >
                     Simulate Payment Failed
                   </button>
@@ -377,7 +384,7 @@ export const CheckoutModal: React.FC = () => {
 
         {/* STEP 4: ORDER & PAYMENT STATUS CONFIRMATION */}
         {step === 'status' && (
-          <div className="py-8 text-center space-y-6">
+          <div className="flex-1 overflow-y-auto px-5 py-8 sm:px-8 text-center space-y-6">
             {activeOrder?.status === 'paid' ? (
               <>
                 <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center">
@@ -387,7 +394,7 @@ export const CheckoutModal: React.FC = () => {
                   <span className="text-xs font-semibold uppercase tracking-widest text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
                     Payment Verified Successfully
                   </span>
-                  <h3 className="font-serif text-3xl font-bold text-cocoa-950">
+                  <h3 className="font-serif text-2xl sm:text-3xl font-bold text-cocoa-950">
                     Thank You for Your Order!
                   </h3>
                   <p className="text-sm font-semibold text-gold-700 font-mono">
@@ -399,7 +406,7 @@ export const CheckoutModal: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="bg-ivory-50 p-5 rounded-2xl border border-ivory-200 max-w-md mx-auto text-left text-xs space-y-2">
+                <div className="bg-ivory-50 p-4 sm:p-5 rounded-2xl border border-ivory-200 max-w-md mx-auto text-left text-xs space-y-2">
                   <div className="flex justify-between font-semibold text-cocoa-900 border-b border-ivory-200 pb-2">
                     <span>Amount Paid</span>
                     <span>{formatPrice(activeOrder.total)}</span>
@@ -410,13 +417,13 @@ export const CheckoutModal: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="pt-4 flex justify-center gap-3">
+                <div className="pt-2 flex justify-center gap-3">
                   <button
                     onClick={() => {
                       setIsCheckoutOpen(false);
                       setStep('details');
                     }}
-                    className="px-8 py-3.5 bg-cocoa-900 text-white rounded-full text-xs uppercase tracking-wider font-semibold hover:bg-gold-600 transition-colors"
+                    className="w-full sm:w-auto px-8 py-3.5 bg-cocoa-900 text-white rounded-full text-xs uppercase tracking-wider font-semibold hover:bg-gold-600 transition-colors"
                   >
                     Continue Exploring
                   </button>
@@ -439,7 +446,7 @@ export const CheckoutModal: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="flex justify-center gap-3 pt-4">
+                <div className="flex justify-center gap-3 pt-2">
                   <button
                     onClick={() => setStep('gateway_redirect')}
                     className="px-6 py-3 bg-cocoa-900 text-white rounded-full text-xs uppercase tracking-wider font-semibold hover:bg-gold-600 transition-colors"

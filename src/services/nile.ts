@@ -253,8 +253,8 @@ class NileService {
         ? '/storefront-proxy'
         : ((import.meta.env.VITE_NILE_API_BASE_URL as string) || 'https://api.nile.ng/storefront/v1'),
       allowedOrigin: (import.meta.env.VITE_ALLOWED_ORIGIN as string) || 'https://bbglowskincare.com',
-      storeSlug: (import.meta.env.VITE_STORE_SLUG as string) || 'bbglow',
-      isMockFallbackEnabled: true
+      storeSlug: (import.meta.env.VITE_STORE_SLUG as string) || 'bibiglow',
+      isMockFallbackEnabled: false
     };
 
     if (typeof window !== 'undefined') {
@@ -614,7 +614,18 @@ class NileService {
     const raw: any = await this.request<any>('/checkout', {
       method: 'POST',
       body: JSON.stringify({
-        customer: payload.customer,
+        email: payload.customer.email,
+        customerEmail: payload.customer.email,
+        firstName: payload.customer.firstName,
+        lastName: payload.customer.lastName,
+        phone: payload.customer.phone,
+        customerPhone: payload.customer.phone,
+        customer: {
+          email: payload.customer.email,
+          firstName: payload.customer.firstName,
+          lastName: payload.customer.lastName,
+          phone: payload.customer.phone
+        },
         shippingAddress: addressStr,
         items,
         note: payload.note || undefined
@@ -652,11 +663,33 @@ class NileService {
       body: JSON.stringify({ orderId: Number(orderId) || orderId })
     });
     const res = raw?.responseObject || raw;
+    const authUrl =
+      res.authorizationUrl ||
+      res.paymentLink ||
+      res.initializedPayment?.paymentLink ||
+      res.initializedPayment?.authorizationUrl ||
+      res.paymentUrl ||
+      res.checkoutUrl ||
+      res.link ||
+      '';
+    const ref =
+      res.reference ||
+      res.initializedPayment?.transactionId ||
+      res.paymentReference ||
+      res.transactionId ||
+      '';
+    const gateway =
+      res.gateway ||
+      res.provider ||
+      res.initializedPayment?.method ||
+      res.paymentGateway ||
+      'Paystack';
+
     return {
       orderId,
-      authorizationUrl: res.authorizationUrl || res.paymentUrl || res.checkoutUrl || res.link || '',
-      reference: res.reference || res.paymentReference || '',
-      gateway: res.gateway || res.paymentGateway || 'Paystack'
+      authorizationUrl: authUrl,
+      reference: ref,
+      gateway
     };
   }
 
@@ -900,7 +933,7 @@ class NileService {
       // Update order to processing or simulate gateway redirect
       const paymentRes: NilePaymentResponse = {
         orderId,
-        authorizationUrl: `https://checkout.nile.ng/pay/${ref}?orderId=${orderId}&store=bbglow`,
+        authorizationUrl: '',
         reference: ref,
         gateway: 'Paystack'
       };

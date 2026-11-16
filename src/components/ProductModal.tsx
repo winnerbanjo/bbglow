@@ -71,34 +71,34 @@ export const ProductModal: React.FC = () => {
   )}`;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-cocoa-950/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-fade-in">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-cocoa-950/70 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6 animate-fade-in">
       <div
-        className="relative bg-ivory-50 rounded-3xl max-w-4xl w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-ivory-200 animate-slide-up"
+        className="relative bg-ivory-50 rounded-t-3xl sm:rounded-3xl max-w-4xl w-full max-h-[94dvh] sm:max-h-[90vh] overflow-y-auto overscroll-contain shadow-2xl border border-ivory-200 animate-slide-up"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={() => setSelectedProduct(null)}
-          className="absolute top-4 right-4 z-20 p-2.5 rounded-full bg-ivory-100 hover:bg-gold-100 text-cocoa-800 transition-colors shadow-sm"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 p-2 sm:p-2.5 rounded-full bg-white/90 backdrop-blur-sm hover:bg-gold-100 text-cocoa-800 transition-colors shadow-sm"
           aria-label="Close dialog"
         >
           <X className="w-5 h-5" />
         </button>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 sm:p-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8 p-4 sm:p-8 md:p-10">
           
           {/* Left Column: Image Gallery */}
-          <div className="space-y-4">
-            <div className="aspect-square rounded-2xl bg-gradient-to-b from-champagne-light to-ivory-200 p-6 flex items-center justify-center border border-ivory-200/80 overflow-hidden relative">
+          <div className="space-y-3 sm:space-y-4">
+            <div className="aspect-[4/3] sm:aspect-square rounded-2xl bg-gradient-to-b from-champagne-light to-ivory-200 p-4 sm:p-6 flex items-center justify-center border border-ivory-200/80 overflow-hidden relative">
               {hasDiscount && (
-                <div className="absolute top-4 left-4 bg-cocoa-900 text-gold-300 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow-sm z-10">
+                <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-cocoa-900 text-gold-300 text-[10px] sm:text-xs font-bold uppercase tracking-wider px-2.5 sm:px-3 py-1 rounded-full shadow-sm z-10">
                   Special Offer
                 </div>
               )}
               <img
                 src={selectedProduct.images?.[activeImageIndex] || selectedProduct.images?.[0] || 'https://bbglowskincare.com/cdn/shop/files/1001408077.png'}
                 alt={selectedProduct.name}
-                className="w-full h-full object-contain max-h-80 drop-shadow-xl transition-all duration-300"
+                className="w-full h-full object-contain max-h-52 sm:max-h-80 drop-shadow-xl transition-all duration-300"
                 onError={(e) => {
                   e.currentTarget.src = 'https://bbglowskincare.com/cdn/shop/files/1001408077.png';
                 }}
@@ -107,12 +107,12 @@ export const ProductModal: React.FC = () => {
 
             {/* Thumbnail Carousel */}
             {Boolean(selectedProduct.images && selectedProduct.images.length > 1) && (
-              <div className="flex gap-3 justify-center">
+              <div className="flex gap-2.5 sm:gap-3 justify-center overflow-x-auto py-1">
                 {selectedProduct.images.map((img, idx) => (
                   <button
                     key={idx}
                     onClick={() => setActiveImageIndex(idx)}
-                    className={`w-16 h-16 rounded-xl border-2 p-1.5 transition-all bg-white ${
+                    className={`w-12 h-12 sm:w-16 sm:h-16 rounded-xl border-2 p-1 transition-all bg-white shrink-0 ${
                       activeImageIndex === idx ? 'border-gold-500 scale-105' : 'border-ivory-200 opacity-70 hover:opacity-100'
                     }`}
                   >
@@ -127,15 +127,15 @@ export const ProductModal: React.FC = () => {
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl border border-emerald-600/30 bg-emerald-50 text-emerald-800 hover:bg-emerald-100 transition-colors text-xs font-semibold tracking-wider uppercase mt-4"
+              className="flex items-center justify-center gap-2 w-full py-2.5 sm:py-3 px-4 rounded-xl border border-emerald-600/30 bg-emerald-50 text-emerald-800 hover:bg-emerald-100 transition-colors text-xs font-semibold tracking-wider uppercase"
             >
-              <MessageCircle className="w-4 h-4 text-emerald-600" />
-              <span>Ask a BB Glow Skincare Specialist</span>
+              <MessageCircle className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span>Ask a Skincare Specialist</span>
             </a>
           </div>
 
           {/* Right Column: Product Detail & Authoritative Controls */}
-          <div className="flex flex-col justify-between space-y-6">
+          <div className="flex flex-col justify-between space-y-5 sm:space-y-6">
             <div className="space-y-4">
               {/* Category & Verified Backend Tag */}
               <div className="flex items-center justify-between text-xs">
@@ -265,25 +265,25 @@ export const ProductModal: React.FC = () => {
             </div>
 
             {/* Quantity Selector & Add to Cart */}
-            <div className="space-y-3 pt-4 border-t border-ivory-200">
-              <div className="flex items-center gap-4">
+            <div className="space-y-3 pt-3 sm:pt-4 border-t border-ivory-200">
+              <div className="flex items-center gap-3 sm:gap-4">
                 {/* Quantity Control */}
-                <div className="flex items-center border border-ivory-300 rounded-xl bg-white px-3 py-1.5 shadow-sm">
+                <div className="flex items-center border border-ivory-300 rounded-xl bg-white px-2 py-1 shadow-sm">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
                     disabled={quantity <= 1 || isOutOfStock}
-                    className="p-1 text-cocoa-700 hover:text-gold-600 disabled:opacity-30"
+                    className="w-8 h-8 flex items-center justify-center text-cocoa-700 hover:text-gold-600 disabled:opacity-30 active:scale-90"
                     aria-label="Decrease quantity"
                   >
                     <Minus className="w-3.5 h-3.5" />
                   </button>
-                  <span className="w-10 text-center font-semibold text-cocoa-900 text-sm">
+                  <span className="w-8 text-center font-semibold text-cocoa-900 text-sm">
                     {quantity}
                   </span>
                   <button
                     onClick={() => setQuantity(Math.min(selectedProduct.stock, quantity + 1))}
                     disabled={quantity >= selectedProduct.stock || isOutOfStock}
-                    className="p-1 text-cocoa-700 hover:text-gold-600 disabled:opacity-30"
+                    className="w-8 h-8 flex items-center justify-center text-cocoa-700 hover:text-gold-600 disabled:opacity-30 active:scale-90"
                     aria-label="Increase quantity"
                   >
                     <Plus className="w-3.5 h-3.5" />
@@ -304,7 +304,7 @@ export const ProductModal: React.FC = () => {
               <button
                 onClick={handleAddToCart}
                 disabled={isOutOfStock || isAdding}
-                className={`w-full py-4 px-6 rounded-2xl font-semibold uppercase tracking-wider text-xs transition-all duration-300 flex items-center justify-center gap-2.5 shadow-md ${
+                className={`w-full py-3.5 sm:py-4 px-6 rounded-2xl font-semibold uppercase tracking-wider text-xs transition-all duration-300 flex items-center justify-center gap-2.5 shadow-md active:scale-[0.99] ${
                   isOutOfStock
                     ? 'bg-ivory-300 text-cocoa-400 cursor-not-allowed'
                     : justAdded
