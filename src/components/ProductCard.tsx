@@ -32,7 +32,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     if (isOutOfStock || isAdding) return;
 
     setIsAdding(true);
-    const success = await addToCart(product.uuid, product.variants[0]?.uuid, 1);
+    const success = await addToCart(product.uuid, product.variants?.[0]?.uuid, 1);
     setIsAdding(false);
     if (success) {
       setJustAdded(true);
@@ -78,10 +78,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
           {/* Product Image */}
           <img
-            src={product.images[0]}
+            src={product.images?.[0] || 'https://bbglowskincare.com/cdn/shop/files/1001408077.png'}
             alt={product.name}
             className="w-full h-full object-contain max-h-56 sm:max-h-64 transition-transform duration-500 group-hover:scale-105"
             loading="lazy"
+            onError={(e) => {
+              e.currentTarget.src = 'https://bbglowskincare.com/cdn/shop/files/1001408077.png';
+            }}
           />
 
           {/* Quick Hover / Tap Action Overlay */}
@@ -103,7 +106,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="p-4 sm:p-5 space-y-2.5 sm:space-y-3">
           {/* Category & Size */}
           <div className="flex items-center justify-between text-[11px] text-cocoa-500 uppercase tracking-wider font-medium">
-            <span>{product.categories[0]?.name || 'Flawless Routine'}</span>
+            <span>{product.categories?.[0]?.name || 'Flawless Routine'}</span>
             {product.size && <span className="text-gold-700 font-semibold">{product.size}</span>}
           </div>
 
@@ -114,7 +117,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
           {/* Short Description */}
           <p className="text-xs text-cocoa-600 line-clamp-2 leading-relaxed">
-            {product.description}
+            {product.description || 'Authentic medical-grade brightening formula for radiant skin.'}
           </p>
 
           {/* Authoritative Pricing */}

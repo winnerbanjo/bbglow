@@ -112,7 +112,7 @@ export const DeveloperDrawer: React.FC = () => {
       try {
         const products = await nile.getProducts();
         const updated = await nile.updateCartItem({ productId: products[0].uuid, quantity: 2 });
-        addResult('8. Cart Quantity Update (PATCH /cart/items)', 'passed', `New quantity: 2`);
+        addResult('8. Cart Quantity Update (PUT /cart/items)', 'passed', `Item count: ${updated.itemCount}`);
       } catch (e: any) {
         addResult('8. Cart Quantity Update', 'failed', e.message);
       }
@@ -133,10 +133,10 @@ export const DeveloperDrawer: React.FC = () => {
         const order = await nile.createCheckout({
           customer: { email: 'test@bbglow.com', firstName: 'Test', lastName: 'Auditor', phone: '+23400000000' },
           shippingAddress: { line1: '12 Marina Road', city: 'Lagos', state: 'Lagos', country: 'Nigeria' },
-          items: [{ productId: products[0].uuid, quantity: 1 }]
+          items: [{ productId: products[0].uuid, quantity: 1, productName: products[0].name, productPrice: products[0].price } as any]
         });
         const payment = await nile.initiatePayment(order.orderId);
-        addResult('10. Checkout & Gateway Initiation (POST /checkout & /payment)', 'passed', `Ref: ${payment.reference}`);
+        addResult('10. Checkout & Gateway Initiation (POST /checkout & /payment)', 'passed', `Ref: ${payment.reference || payment.authorizationUrl}`);
       } catch (e: any) {
         addResult('10. Checkout & Gateway Initiation', 'failed', e.message);
       }

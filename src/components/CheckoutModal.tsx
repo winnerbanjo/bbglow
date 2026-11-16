@@ -74,8 +74,10 @@ export const CheckoutModal: React.FC = () => {
         items: items.map((i) => ({
           productId: i.productId,
           variantId: i.variantId,
-          quantity: i.quantity
-        })),
+          quantity: i.quantity,
+          productName: i.name,
+          productPrice: i.discountedUnitPrice !== null ? i.discountedUnitPrice : i.unitPrice
+        })) as any,
         note: note || undefined
       };
 

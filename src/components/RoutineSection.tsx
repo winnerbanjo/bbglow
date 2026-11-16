@@ -1,14 +1,24 @@
 import React from 'react';
 import { ArrowRight, Droplets, Sparkles, Sun, Moon, ShieldCheck } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
+import { MOCK_PRODUCTS } from '../services/mockData';
 
 export const RoutineSection: React.FC = () => {
   const { setSelectedProduct, products } = useStore();
 
-  const faceWash = products.find((p) => p.slug.includes('face-wash')) || products[0];
-  const toner = products.find((p) => p.slug.includes('toner')) || products[1];
-  const faceCream = products.find((p) => p.slug.includes('face-cream')) || products[2];
-  const bodyMilk = products.find((p) => p.slug.includes('body-milk')) || products[3];
+  const faceWash =
+    products.find((p) => p.slug?.includes('face-wash') || p.name?.toLowerCase().includes('face wash') || p.name?.toLowerCase().includes('cleanser')) ||
+    products[0] ||
+    MOCK_PRODUCTS[0];
+  const toner =
+    products.find((p) => p.slug?.includes('toner') || p.name?.toLowerCase().includes('toner')) ||
+    MOCK_PRODUCTS[2];
+  const faceCream =
+    products.find((p) => p.slug?.includes('face-cream') || p.name?.toLowerCase().includes('cream')) ||
+    MOCK_PRODUCTS[3];
+  const bodyMilk =
+    products.find((p) => p.slug?.includes('body-milk') || p.name?.toLowerCase().includes('milk') || p.name?.toLowerCase().includes('lotion')) ||
+    MOCK_PRODUCTS[1];
 
   const steps = [
     {

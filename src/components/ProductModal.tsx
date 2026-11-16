@@ -32,7 +32,7 @@ export const ProductModal: React.FC = () => {
   useEffect(() => {
     if (selectedProduct) {
       setActiveImageIndex(0);
-      setSelectedVariantId(selectedProduct.variants[0]?.uuid);
+      setSelectedVariantId(selectedProduct.variants?.[0]?.uuid);
       setQuantity(1);
       loadProductReviews(selectedProduct.uuid);
     }
@@ -96,14 +96,17 @@ export const ProductModal: React.FC = () => {
                 </div>
               )}
               <img
-                src={selectedProduct.images[activeImageIndex] || selectedProduct.images[0]}
+                src={selectedProduct.images?.[activeImageIndex] || selectedProduct.images?.[0] || 'https://bbglowskincare.com/cdn/shop/files/1001408077.png'}
                 alt={selectedProduct.name}
                 className="w-full h-full object-contain max-h-80 drop-shadow-xl transition-all duration-300"
+                onError={(e) => {
+                  e.currentTarget.src = 'https://bbglowskincare.com/cdn/shop/files/1001408077.png';
+                }}
               />
             </div>
 
             {/* Thumbnail Carousel */}
-            {selectedProduct.images.length > 1 && (
+            {Boolean(selectedProduct.images && selectedProduct.images.length > 1) && (
               <div className="flex gap-3 justify-center">
                 {selectedProduct.images.map((img, idx) => (
                   <button
@@ -137,7 +140,7 @@ export const ProductModal: React.FC = () => {
               {/* Category & Verified Backend Tag */}
               <div className="flex items-center justify-between text-xs">
                 <span className="uppercase tracking-widest text-gold-600 font-semibold">
-                  {selectedProduct.categories[0]?.name || 'BB Glow Flawless'}
+                  {selectedProduct.categories?.[0]?.name || 'BB Glow Flawless'}
                 </span>
                 <span className="flex items-center gap-1 text-[11px] text-cocoa-500">
                   <ShieldCheck className="w-3.5 h-3.5 text-gold-600" />

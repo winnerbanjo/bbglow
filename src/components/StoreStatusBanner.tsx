@@ -1,13 +1,28 @@
 import React from 'react';
 import { useStore } from '../context/StoreContext';
-import { AlertTriangle, Clock } from 'lucide-react';
+import { AlertTriangle, Clock, AlertCircle } from 'lucide-react';
 
 export const StoreStatusBanner: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { status, store, refetchStore } = useStore();
+  const { status, store, refetchStore, originNotice, setIsDevDrawerOpen } = useStore();
 
+  const currentOrigin = typeof window !== 'undefined' ? window.location.origin : 'https://www.bbglowskincare.shop';
 
-
-  // 3. Store Status: PAUSED
+  const renderOriginNotice = originNotice ? (
+    <div className="bg-amber-900 text-amber-100 text-xs px-4 py-2.5 shadow-inner border-b border-amber-800 flex items-center justify-between gap-3 z-50 relative">
+      <div className="flex items-center gap-2 max-w-4xl mx-auto text-left">
+        <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" />
+        <span>
+          <strong>Nile Dashboard Setup Required:</strong> Domain <code className="bg-black/30 px-1.5 py-0.5 rounded text-gold-300 font-mono text-[11px]">{currentOrigin}</code> must be added to <strong>Allowed Origins</strong> for your API key on the Nile Dashboard so live products sync directly.
+        </span>
+      </div>
+      <button
+        onClick={() => setIsDevDrawerOpen(true)}
+        className="px-2.5 py-1 bg-amber-800 hover:bg-amber-700 text-white rounded text-[10px] font-semibold uppercase tracking-wider shrink-0 transition-colors"
+      >
+        Diagnostics
+      </button>
+    </div>
+  ) : null;
   if (status?.status === 'PAUSED') {
     return (
       <div className="min-h-screen bg-ivory-50 flex flex-col items-center justify-center p-6 text-center">
@@ -84,5 +99,10 @@ export const StoreStatusBanner: React.FC<{ children: React.ReactNode }> = ({ chi
   }
 
   // 5. Normal ACTIVE status: render child website components
-  return <>{children}</>;
+  return (
+    <>
+      {renderOriginNotice}
+      {children}
+    </>
+  );
 };

@@ -22,6 +22,7 @@ interface StoreContextType {
   store: NileStore | null;
   status: NileStatus | null;
   storeError: NileApiError | null;
+  originNotice: string | null;
   isLoadingStore: boolean;
   refetchStore: () => Promise<void>;
 
@@ -84,6 +85,7 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const [store, setStore] = useState<NileStore | null>(null);
   const [status, setStatus] = useState<NileStatus | null>(null);
   const [storeError, setStoreError] = useState<NileApiError | null>(null);
+  const [originNotice, setOriginNotice] = useState<string | null>(null);
   const [isLoadingStore, setIsLoadingStore] = useState<boolean>(true);
 
   const [products, setProducts] = useState<NileProduct[]>([]);
@@ -129,8 +131,14 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       setStore(storeData);
       setStatus(statusData);
       setLastRequestId(nile.getLastRequestId());
+      if (nile.getLastOriginError()) {
+        setOriginNotice(nile.getLastOriginError());
+      }
     } catch (err: any) {
       console.error('[Store Init Failure]:', err);
+      if (err.code === 'origin_not_allowed' || nile.getLastOriginError()) {
+        setOriginNotice(err.message || nile.getLastOriginError());
+      }
       setStoreError({
         type: err.type || 'store_error',
         code: err.code || 'init_failed',
@@ -154,8 +162,14 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       setProducts(prods);
       setCategories(cats);
       setLastRequestId(nile.getLastRequestId());
-    } catch (err) {
+      if (nile.getLastOriginError()) {
+        setOriginNotice(nile.getLastOriginError());
+      }
+    } catch (err: any) {
       console.error('[Catalog Fetch Error]:', err);
+      if (err?.code === 'origin_not_allowed' || nile.getLastOriginError()) {
+        setOriginNotice(err?.message || nile.getLastOriginError());
+      }
     } finally {
       setIsLoadingProducts(false);
     }
@@ -337,6 +351,7 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         store,
         status,
         storeError,
+        originNotice,
         isLoadingStore,
         refetchStore: initStore,
         products,

@@ -11,13 +11,23 @@ export const ProductCollection: React.FC = () => {
   const filteredProducts = products.filter((product) => {
     const matchesCategory =
       !activeCategory ||
-      product.categories.some((c) => String(c.id) === activeCategory || c.slug === activeCategory);
+      product.categories.some(
+        (c) =>
+          String(c.id) === String(activeCategory) ||
+          (c as any).uuid === activeCategory ||
+          c.slug === activeCategory
+      );
     const matchesSearch =
       !searchQuery ||
       product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.description.toLowerCase().includes(searchQuery.toLowerCase());
+      (product.description || '').toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
+
+  // Filter out redundant 'all products' category tab since 'All Products' is already the default primary tab
+  const displayCategories = categories.filter(
+    (cat) => cat.name.trim().toLowerCase() !== 'all products'
+  );
 
   return (
     <section id="collection" className="py-16 sm:py-24 bg-ivory-50 scroll-mt-20">
@@ -64,7 +74,7 @@ export const ProductCollection: React.FC = () => {
             All Products ({products.length})
           </button>
 
-          {categories.map((cat) => (
+          {displayCategories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActiveCategory(String(cat.id))}

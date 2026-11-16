@@ -7,7 +7,15 @@ export default defineConfig({
     port: 5173,
     open: false,
     host: true,
-    allowedHosts: true
+    allowedHosts: true,
+    proxy: {
+      '/storefront-proxy': {
+        target: 'https://api.nile.ng',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/storefront-proxy/, '/storefront/v1'),
+        secure: true
+      }
+    }
   },
   build: {
     outDir: 'dist',

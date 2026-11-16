@@ -1,19 +1,28 @@
 import React, { useState } from 'react';
 import { useStore } from '../context/StoreContext';
 import { Check, ShoppingBag, Gift, Truck } from 'lucide-react';
+import { MOCK_PRODUCTS } from '../services/mockData';
 
 export const FeaturedCompleteSet: React.FC = () => {
   const { products, addToCart, setSelectedProduct, currency } = useStore();
   const [isAdding, setIsAdding] = useState(false);
   const [justAdded, setJustAdded] = useState(false);
 
-  // Find the complete set or flagship bundle from Nile products
-  const completeSet =
-    products.find((p) => p.uuid === 'prod_flawless_complete_set') ||
-    products.find((p) => p.slug === 'flawless-radiance-4-piece-skincare-set-by-bb') ||
-    products.find((p) => p.slug === 'flawless-complete-set') ||
-    products.find((p) => p.isBundle && (p.discountedPrice === 70000 || p.price === 70000)) ||
+  // Find the complete set or flagship bundle from live Nile products
+  const liveBundle =
     products.find((p) => p.isBundle) ||
+    products.find((p) => p.uuid === 'prod_flawless_complete_set') ||
+    products.find((p) =>
+      p.slug?.includes('complete-set') ||
+      p.slug?.includes('4-piece') ||
+      p.name?.toLowerCase().includes('complete set') ||
+      p.name?.toLowerCase().includes('4-piece set') ||
+      p.name?.toLowerCase().includes('bundle')
+    );
+
+  const completeSet =
+    liveBundle ||
+    MOCK_PRODUCTS.find((p) => p.uuid === 'prod_flawless_complete_set') ||
     products[0];
 
   if (!completeSet) return null;
@@ -33,7 +42,7 @@ export const FeaturedCompleteSet: React.FC = () => {
   const handleAddBundle = async () => {
     if (isAdding) return;
     setIsAdding(true);
-    const success = await addToCart(completeSet.uuid, completeSet.variants[0]?.uuid, 1);
+    const success = await addToCart(completeSet.uuid, completeSet.variants?.[0]?.uuid, 1);
     setIsAdding(false);
     if (success) {
       setJustAdded(true);

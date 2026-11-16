@@ -43,16 +43,215 @@ export interface NileClientConfig {
   isMockFallbackEnabled: boolean;
 }
 
+// Normalization Helpers
+export function extractImages(raw: any): string[] {
+  const images: string[] = [];
+
+  const parseItem = (item: any) => {
+    if (!item) return;
+    if (typeof item === 'string') {
+      const trimmed = item.trim();
+      if ((trimmed.startsWith('[') && trimmed.endsWith(']')) || (trimmed.startsWith('"[') && trimmed.endsWith(']"'))) {
+        try {
+          let cleaned = trimmed;
+          if (cleaned.startsWith('"') && cleaned.endsWith('"')) {
+            cleaned = JSON.parse(cleaned);
+          }
+          const parsed = typeof cleaned === 'string' ? JSON.parse(cleaned) : cleaned;
+          if (Array.isArray(parsed)) {
+            parsed.forEach(parseItem);
+            return;
+          }
+        } catch {
+          // not valid json
+        }
+      }
+      if (trimmed.startsWith('http://') || trimmed.startsWith('https://') || trimmed.startsWith('/')) {
+        images.push(trimmed);
+      }
+    } else if (Array.isArray(item)) {
+      item.forEach(parseItem);
+    }
+  };
+
+  parseItem(raw?.images);
+  parseItem(raw?.imageUrls);
+  parseItem(raw?.imageUrl);
+  parseItem(raw?.productImage);
+
+  if (images.length === 0) {
+    images.push('https://bbglowskincare.com/cdn/shop/files/1001408077.png');
+  }
+
+  return Array.from(new Set(images));
+}
+
+export function extractCategories(raw: any): NileCategory[] {
+  const cats: NileCategory[] = [];
+
+  const addCat = (c: any) => {
+    if (!c) return;
+    const catObj = c.category || c;
+    const id = catObj.id || catObj.uuid || c.categoryId || c.id;
+    const name = catObj.name || c.name || 'All Products';
+    const slug = catObj.slug || catObj.uuid || (name ? name.toLowerCase().replace(/[^a-z0-9]+/g, '-') : String(id));
+    if (id && !cats.some((existing) => String(existing.id) === String(id))) {
+      cats.push({
+        id,
+        name,
+        slug,
+        description: catObj.description || undefined
+      });
+    }
+  };
+
+  if (Array.isArray(raw?.categories)) {
+    raw.categories.forEach(addCat);
+  }
+  if (raw?.category) {
+    addCat(raw.category);
+  }
+  if (cats.length === 0) {
+    cats.push({ id: 'all', name: 'All Products', slug: 'all' });
+  }
+  return cats;
+}
+
+export function extractVariants(raw: any): NileVariant[] {
+  const list = raw?.variants || raw?.productVariants || [];
+  if (Array.isArray(list) && list.length > 0) {
+    return list.map((v: any) => ({
+      uuid: v.uuid || v.id || String(Math.random()),
+      title: v.title || v.name || 'Standard',
+      sku: v.sku || undefined,
+      price: typeof v.price === 'number' ? v.price : (raw?.price || 0),
+      discountedPrice: v.discountedPrice !== undefined ? v.discountedPrice : null,
+      stock: typeof v.stock === 'number' ? v.stock : (raw?.stock || 0),
+      options: v.options || {}
+    }));
+  }
+  return [
+    {
+      uuid: raw?.uuid || String(raw?.id || 'default'),
+      title: 'Standard',
+      price: typeof raw?.price === 'number' ? raw.price : 0,
+      discountedPrice: raw?.discountedPrice !== undefined ? raw.discountedPrice : null,
+      stock: typeof raw?.stock === 'number' ? raw.stock : 0
+    }
+  ];
+}
+
+export function extractStatus(raw: any): 'ACTIVE' | 'OUT_OF_STOCK' | 'DRAFT' | 'PREORDER' {
+  if (raw?.isSoldOut || (typeof raw?.stock === 'number' && raw.stock <= 0)) {
+    return 'OUT_OF_STOCK';
+  }
+  const st = (raw?.productStatus || raw?.status || raw?.publishStatus || '').toUpperCase();
+  if (st === 'AVAILABLE' || st === 'ACTIVE' || st === 'PUBLISHED') {
+    return 'ACTIVE';
+  }
+  if (st === 'OUT_OF_STOCK' || st === 'UNAVAILABLE') {
+    return 'OUT_OF_STOCK';
+  }
+  if (st === 'PREORDER') {
+    return 'PREORDER';
+  }
+  return 'ACTIVE';
+}
+
+export function normalizeProduct(raw: any): NileProduct {
+  const images = extractImages(raw);
+  const categories = extractCategories(raw);
+  const variants = extractVariants(raw);
+  const status = extractStatus(raw);
+
+  return {
+    uuid: raw?.uuid || String(raw?.id || ''),
+    name: raw?.name || 'Flawless Skincare Product',
+    slug: raw?.slug || (raw?.name ? raw.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') : 'product'),
+    description: raw?.description || '',
+    price: typeof raw?.price === 'number' ? raw.price : 0,
+    discountedPrice: raw?.discountedPrice !== undefined ? raw.discountedPrice : null,
+    currency: raw?.currency || 'NGN',
+    stock: typeof raw?.stock === 'number' ? raw.stock : 0,
+    status,
+    images,
+    variants,
+    attributes: raw?.attributes || {},
+    categories,
+    size: raw?.size || raw?.quantitySizes || undefined,
+    ingredients: raw?.ingredients || undefined,
+    benefits: raw?.benefits || undefined,
+    usageInstructions: raw?.usageInstructions || undefined,
+    isBundle: Boolean(raw?.isBundle || raw?.bundleItems?.length),
+    bundleItems: raw?.bundleItems || undefined
+  };
+}
+
+export function normalizeCategory(raw: any): NileCategory {
+  const catObj = raw?.category || raw;
+  const id = catObj.id || catObj.uuid || 'all';
+  const name = catObj.name || 'All Products';
+  const slug = catObj.slug || catObj.uuid || (name ? name.toLowerCase().replace(/[^a-z0-9]+/g, '-') : String(id));
+  return {
+    id,
+    name,
+    slug,
+    description: catObj.description || undefined
+  };
+}
+
+export function normalizeCart(raw: any): NileCart {
+  const cartObj = raw?.responseObject || raw || {};
+  const rawItems = Array.isArray(cartObj.items) ? cartObj.items : [];
+
+  const items: NileCartItem[] = rawItems.map((item: any) => {
+    const prod = item.product || {};
+    const itemImages = extractImages({ ...prod, productImage: item.productImage });
+    const unitPrice = typeof item.price === 'number' ? item.price : (prod.price || 0);
+    const discountedUnitPrice = prod.discountedPrice !== undefined ? prod.discountedPrice : null;
+    const effPrice = discountedUnitPrice !== null ? discountedUnitPrice : unitPrice;
+    const qty = typeof item.quantity === 'number' ? item.quantity : 1;
+
+    return {
+      productId: item.productId || prod.uuid || String(prod.id || ''),
+      variantId: item.variantID || item.variantId || undefined,
+      name: prod.name || item.variantName || 'Skincare Product',
+      image: itemImages[0] || 'https://bbglowskincare.com/cdn/shop/files/1001408077.png',
+      size: prod.size || prod.quantitySizes || undefined,
+      quantity: qty,
+      unitPrice,
+      discountedUnitPrice,
+      subtotal: effPrice * qty
+    };
+  });
+
+  const total = typeof cartObj.total === 'number' ? cartObj.total : items.reduce((sum, i) => sum + i.subtotal, 0);
+  const itemCount = items.reduce((sum, i) => sum + i.quantity, 0);
+
+  return {
+    cartId: cartObj.cartId || '',
+    items,
+    subtotal: total,
+    totalDiscount: 0,
+    total,
+    currency: cartObj.currency || 'NGN',
+    itemCount
+  };
+}
+
 class NileService {
   private config: NileClientConfig;
   private cartId: string | null = null;
   private authToken: string | null = null;
   private lastRequestId: string | null = null;
+  private lastOriginError: string | null = null;
 
   constructor() {
     this.config = {
       apiKey: (import.meta.env.VITE_NILE_API_KEY as string) || '',
-      baseUrl: (import.meta.env.VITE_NILE_API_BASE_URL as string) || 'https://api.nile.ng/storefront/v1',
+      baseUrl: (import.meta.env.DEV && !import.meta.env.VITE_NILE_API_BASE_URL?.includes('localhost'))
+        ? '/storefront-proxy'
+        : ((import.meta.env.VITE_NILE_API_BASE_URL as string) || 'https://api.nile.ng/storefront/v1'),
       allowedOrigin: (import.meta.env.VITE_ALLOWED_ORIGIN as string) || 'https://bbglowskincare.com',
       storeSlug: (import.meta.env.VITE_STORE_SLUG as string) || 'bbglow',
       isMockFallbackEnabled: true
@@ -74,6 +273,10 @@ class NileService {
 
   public getLastRequestId(): string | null {
     return this.lastRequestId;
+  }
+
+  public getLastOriginError(): string | null {
+    return this.lastOriginError;
   }
 
   public getAuthToken(): string | null {
@@ -173,6 +376,10 @@ class NileService {
           // Non-JSON response
         }
 
+        if (errJson?.error?.code === 'origin_not_allowed') {
+          this.lastOriginError = errJson.error.message || 'Domain not authorized on Nile dashboard';
+        }
+
         const apiErr: NileApiError = {
           type: errJson?.error?.type || 'api_error',
           code: errJson?.error?.code || `http_${response.status}`,
@@ -186,6 +393,9 @@ class NileService {
       const data = await response.json();
       return (data.responseObject !== undefined ? data.responseObject : data) as T;
     } catch (error: any) {
+      if (error?.code === 'origin_not_allowed') {
+        this.lastOriginError = error.message;
+      }
       console.warn(`[Nile API Warning] Request to ${endpoint} failed:`, error);
 
       // If mock fallback is enabled and we encounter connection failure or invalid key, run through simulated Nile engine
@@ -282,16 +492,20 @@ class NileService {
     const endpoint = `/products${qs ? `?${qs}` : ''}`;
     const raw: any = await this.request<any>(endpoint);
     const list = Array.isArray(raw) ? raw : (raw?.products || raw?.responseObject?.products || []);
-    if (list.length === 0 && this.config.isMockFallbackEnabled) {
+
+    const normalized = list.map((p: any) => normalizeProduct(p));
+
+    // Only fallback to mock products if API returned 0 products AND mock fallback is enabled AND no filter was applied
+    if (normalized.length === 0 && this.config.isMockFallbackEnabled && !params?.category && !params?.search) {
       return MOCK_PRODUCTS;
     }
-    return list;
+    return normalized;
   }
 
   public async getProductByUuid(uuid: string): Promise<NileProduct> {
     const raw: any = await this.request<any>(`/products/${uuid}`);
     const product = raw?.responseObject || raw;
-    return product;
+    return normalizeProduct(product);
   }
 
   public async getCategories(): Promise<NileCategory[]> {
@@ -300,7 +514,7 @@ class NileService {
     if (list.length === 0 && this.config.isMockFallbackEnabled) {
       return MOCK_CATEGORIES;
     }
-    return list;
+    return list.map((c: any) => normalizeCategory(c));
   }
 
   public async getProductsByCategory(categoryId: string | number): Promise<NileProduct[]> {
@@ -309,7 +523,7 @@ class NileService {
     if (list.length === 0 && this.config.isMockFallbackEnabled) {
       return MOCK_PRODUCTS;
     }
-    return list;
+    return list.map((p: any) => normalizeProduct(p));
   }
 
   // ==========================================
@@ -317,7 +531,8 @@ class NileService {
   // ==========================================
 
   public async getCart(): Promise<NileCart> {
-    const cart = await this.request<NileCart>('/cart');
+    const raw: any = await this.request<any>('/cart');
+    const cart = normalizeCart(raw);
     if (cart.cartId) {
       this.setCartId(cart.cartId);
     }
@@ -325,34 +540,48 @@ class NileService {
   }
 
   public async addToCart(payload: NileCartItemPayload): Promise<NileCart> {
-    const cart = await this.request<NileCart>('/cart/items', {
+    const raw: any = await this.request<any>('/cart/items', {
       method: 'POST',
-      body: JSON.stringify(payload)
+      body: JSON.stringify({
+        productId: payload.productId,
+        variantID: payload.variantId || null,
+        quantity: payload.quantity || 1
+      })
     });
-    if (cart.cartId) {
-      this.setCartId(cart.cartId);
+    const cartId = raw?.cartId || raw?.responseObject?.cartId;
+    if (cartId) {
+      this.setCartId(cartId);
     }
-    return cart;
+    return this.getCart();
   }
 
   public async updateCartItem(payload: NileCartUpdatePayload): Promise<NileCart> {
-    return this.request<NileCart>('/cart/items', {
-      method: 'PATCH',
-      body: JSON.stringify(payload)
+    if (payload.quantity <= 0) {
+      return this.removeCartItem(payload.productId);
+    }
+    await this.request<any>('/cart/items', {
+      method: 'PUT',
+      body: JSON.stringify({
+        productId: payload.productId,
+        variantID: payload.variantId || null,
+        quantity: payload.quantity
+      })
     });
+    return this.getCart();
   }
 
   public async removeCartItem(productId: string): Promise<NileCart> {
-    return this.request<NileCart>(`/cart/items/${productId}`, {
+    await this.request<any>(`/cart/items/${productId}`, {
       method: 'DELETE'
     });
+    return this.getCart();
   }
 
   public async clearCart(): Promise<NileCart> {
-    const emptyCart = await this.request<NileCart>('/cart', {
+    await this.request<any>('/cart', {
       method: 'DELETE'
     });
-    return emptyCart;
+    return this.getCart();
   }
 
   // ==========================================
@@ -360,17 +589,75 @@ class NileService {
   // ==========================================
 
   public async createCheckout(payload: NileCheckoutPayload): Promise<NileOrder> {
-    const order = await this.request<NileOrder>('/checkout', {
+    const addressStr = typeof payload.shippingAddress === 'string'
+      ? payload.shippingAddress
+      : [
+          payload.shippingAddress.line1,
+          payload.shippingAddress.line2,
+          payload.shippingAddress.city,
+          payload.shippingAddress.state,
+          payload.shippingAddress.country
+        ].filter(Boolean).join(', ');
+
+    const items = payload.items.map((item: any) => ({
+      productId: item.productId,
+      variantId: item.variantId || null,
+      quantity: item.quantity,
+      productName: item.productName || item.name || 'Skincare Product',
+      productPrice: typeof item.productPrice === 'number'
+        ? item.productPrice
+        : typeof item.unitPrice === 'number'
+        ? item.unitPrice
+        : 0
+    }));
+
+    const raw: any = await this.request<any>('/checkout', {
       method: 'POST',
-      body: JSON.stringify(payload)
+      body: JSON.stringify({
+        customer: payload.customer,
+        shippingAddress: addressStr,
+        items,
+        note: payload.note || undefined
+      })
     });
-    return order;
+
+    const orderData = raw?.responseObject || raw;
+    const orderId = String(orderData.id || orderData.orderId || '');
+    return {
+      orderId,
+      orderNumber: orderData.orderNumber || `BBG-${orderId}`,
+      status: (orderData.status || 'PENDING').toLowerCase() as any,
+      subtotal: orderData.subtotalAmount || orderData.subtotal || orderData.grandTotal || 0,
+      discountTotal: orderData.discountAmount || 0,
+      shippingTotal: orderData.shippingFee || 0,
+      total: orderData.grandTotal || orderData.amountDue || 0,
+      currency: orderData.currency || 'NGN',
+      customer: payload.customer,
+      items: (orderData.items || []).map((it: any) => ({
+        productId: it.productId,
+        name: it.productName || it.name || 'Skincare Item',
+        image: it.productImage || 'https://bbglowskincare.com/cdn/shop/files/1001408077.png',
+        quantity: it.quantity || 1,
+        unitPrice: it.productPrice || it.price || 0,
+        discountedUnitPrice: null,
+        subtotal: (it.productPrice || it.price || 0) * (it.quantity || 1)
+      })),
+      createdAt: orderData.createdAt || new Date().toISOString()
+    };
   }
 
   public async initiatePayment(orderId: string): Promise<NilePaymentResponse> {
-    return this.request<NilePaymentResponse>(`/checkout/${orderId}/payment`, {
-      method: 'POST'
+    const raw: any = await this.request<any>(`/checkout/${orderId}/payment`, {
+      method: 'POST',
+      body: JSON.stringify({ orderId: Number(orderId) || orderId })
     });
+    const res = raw?.responseObject || raw;
+    return {
+      orderId,
+      authorizationUrl: res.authorizationUrl || res.paymentUrl || res.checkoutUrl || res.link || '',
+      reference: res.reference || res.paymentReference || '',
+      gateway: res.gateway || res.paymentGateway || 'Paystack'
+    };
   }
 
   // ==========================================
