@@ -56,8 +56,17 @@ export const ProductCollection: React.FC = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search Flawless products..."
-              className="w-full pl-10 pr-4 py-3 sm:py-2.5 rounded-full bg-white border border-ivory-300 text-xs text-cocoa-900 placeholder:text-cocoa-400 focus:outline-none focus:border-gold-500 shadow-sm"
+              className="w-full pl-10 pr-9 py-3 sm:py-2.5 rounded-full bg-white border border-ivory-300 text-xs text-cocoa-900 placeholder:text-cocoa-400 focus:outline-none focus:border-gold-500 shadow-sm transition-all focus:ring-2 focus:ring-gold-200/50"
             />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-cocoa-400 hover:text-cocoa-900 text-xs p-1"
+                aria-label="Clear search"
+              >
+                ✕
+              </button>
+            )}
           </div>
         </div>
 
@@ -65,9 +74,9 @@ export const ProductCollection: React.FC = () => {
         <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 sm:mb-10 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
           <button
             onClick={() => setActiveCategory(null)}
-            className={`px-4 sm:px-5 py-2 rounded-full text-xs font-semibold tracking-wider uppercase whitespace-nowrap transition-all duration-300 shrink-0 ${
+            className={`px-4 sm:px-5 py-2 rounded-full text-xs font-semibold tracking-wider uppercase whitespace-nowrap transition-all duration-300 shrink-0 active:scale-95 ${
               activeCategory === null
-                ? 'bg-cocoa-900 text-ivory-100 shadow-sm'
+                ? 'bg-cocoa-900 text-ivory-100 shadow-md ring-1 ring-gold-400/40'
                 : 'bg-ivory-200/80 text-cocoa-700 hover:bg-gold-100 hover:text-cocoa-900'
             }`}
           >
@@ -78,9 +87,9 @@ export const ProductCollection: React.FC = () => {
             <button
               key={cat.id}
               onClick={() => setActiveCategory(String(cat.id))}
-              className={`px-4 sm:px-5 py-2 rounded-full text-xs font-semibold tracking-wider uppercase whitespace-nowrap transition-all duration-300 shrink-0 ${
+              className={`px-4 sm:px-5 py-2 rounded-full text-xs font-semibold tracking-wider uppercase whitespace-nowrap transition-all duration-300 shrink-0 active:scale-95 ${
                 activeCategory === String(cat.id)
-                  ? 'bg-cocoa-900 text-ivory-100 shadow-sm'
+                  ? 'bg-cocoa-900 text-ivory-100 shadow-md ring-1 ring-gold-400/40'
                   : 'bg-ivory-200/80 text-cocoa-700 hover:bg-gold-100 hover:text-cocoa-900'
               }`}
             >
