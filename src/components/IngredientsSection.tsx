@@ -48,9 +48,9 @@ export const IngredientsSection: React.FC = () => {
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-cocoa-950">
             The Bio-Active Ingredients
           </h2>
-          <div className="w-12 sm:w-16 h-0.5 bg-gold-400 mx-auto mt-2 sm:mt-4" />
-          <p className="text-cocoa-700 text-xs sm:text-sm md:text-base leading-relaxed pt-2 px-2">
-            Every ingredient in the Flawless by BB Glow portfolio is chosen with medical-grade precision. Zero harmful bleaching chemicals, zero compromises on skin vitality.
+          <div className="w-12 h-0.5 bg-gold-400 mx-auto mt-2" />
+          <p className="text-cocoa-700 text-xs sm:text-sm md:text-base leading-relaxed pt-1 px-2">
+            Formulated with clinical precision. Zero harsh chemicals, zero bleaching agents, and maximum skin vitality.
           </p>
         </div>
 

@@ -6,6 +6,7 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { ReviewMarquee } from './components/ReviewMarquee';
 import { BrandIntro } from './components/BrandIntro';
+import { VisualGallery } from './components/VisualGallery';
 import { BeforeAfterSection } from './components/BeforeAfterSection';
 import { ProductCollection } from './components/ProductCollection';
 import { RoutineSection } from './components/RoutineSection';
@@ -34,10 +35,11 @@ export const AppContent: React.FC = () => {
             <Hero />
             <ReviewMarquee />
             <BrandIntro />
-            <BeforeAfterSection />
+            <VisualGallery />
             <ProductCollection />
             <RoutineSection />
             <FeaturedCompleteSet />
+            <BeforeAfterSection />
             <IngredientsSection />
             <ReviewsSection />
             <DeliverySection />

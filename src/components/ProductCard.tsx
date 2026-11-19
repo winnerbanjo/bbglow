@@ -43,36 +43,36 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div
       onClick={() => setSelectedProduct(product)}
-      className="bg-ivory-50 rounded-2xl border border-ivory-200 overflow-hidden hover:border-gold-300 transition-all duration-300 hover:shadow-xl group flex flex-col justify-between cursor-pointer"
+      className="bg-ivory-50 rounded-2xl border border-ivory-200/90 overflow-hidden hover:border-gold-300 transition-all duration-300 hover:shadow-xl group flex flex-col justify-between cursor-pointer ring-1 ring-gold-200/30 hover:ring-gold-400/60"
     >
       <div>
         {/* Image Container with Badges */}
-        <div className="relative aspect-[4/5] bg-gradient-to-b from-champagne-light via-ivory-100 to-ivory-200 overflow-hidden p-4 sm:p-6 flex items-center justify-center">
+        <div className="relative aspect-[4/5] bg-gradient-to-b from-champagne-light via-ivory-100 to-ivory-200 overflow-hidden p-2 sm:p-5 flex items-center justify-center">
           
           {/* Discount Badge */}
           {hasDiscount && (
-            <div className="absolute top-3 left-3 bg-cocoa-900 text-gold-300 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm z-10">
-              Special Glow Offer
+            <div className="absolute top-2 left-2 sm:top-3 sm:left-3 bg-cocoa-900 text-gold-300 text-[8px] sm:text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full shadow-sm z-10">
+              Special Offer
             </div>
           )}
 
           {/* Bundle Tag */}
           {product.isBundle && (
-            <div className="absolute top-3 right-3 bg-gold-600 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm z-10">
+            <div className="absolute top-2 right-2 sm:top-3 sm:right-3 bg-gold-600 text-white text-[8px] sm:text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full shadow-sm z-10">
               Curated Set
             </div>
           )}
 
           {/* Stock Tag */}
           {isOutOfStock ? (
-            <div className="absolute inset-0 bg-white/75 backdrop-blur-[2px] z-20 flex items-center justify-center">
-              <span className="bg-cocoa-900 text-white text-[11px] sm:text-xs uppercase tracking-widest font-bold px-4 py-2 rounded-full">
+            <div className="absolute inset-0 bg-white/80 backdrop-blur-[2px] z-20 flex items-center justify-center">
+              <span className="bg-cocoa-900 text-white text-[10px] sm:text-xs uppercase tracking-widest font-bold px-3 py-1.5 sm:px-4 sm:py-2 rounded-full">
                 Sold Out
               </span>
             </div>
           ) : product.stock <= 5 ? (
-            <div className="absolute bottom-3 left-3 bg-amber-100 text-amber-900 text-[10px] font-semibold px-2 py-0.5 rounded-full z-10">
-              Only {product.stock} left in stock
+            <div className="absolute bottom-2 left-2 sm:bottom-3 sm:left-3 bg-amber-100 text-amber-900 text-[8px] sm:text-[10px] font-semibold px-1.5 py-0.5 rounded-full z-10">
+              {product.stock} left
             </div>
           ) : null}
 
@@ -80,21 +80,21 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <img
             src={product.images?.[0] || 'https://bbglowskincare.com/cdn/shop/files/1001408077.png'}
             alt={product.name}
-            className="w-full h-full object-contain max-h-56 sm:max-h-64 transition-transform duration-500 group-hover:scale-105"
+            className="w-full h-full object-contain max-h-36 sm:max-h-60 transition-transform duration-500 group-hover:scale-105"
             loading="lazy"
             onError={(e) => {
               e.currentTarget.src = 'https://bbglowskincare.com/cdn/shop/files/1001408077.png';
             }}
           />
 
-          {/* Quick Hover / Tap Action Overlay */}
-          <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-cocoa-950/60 via-cocoa-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
+          {/* Quick Hover / Tap Action Overlay (Desktop) */}
+          <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-cocoa-950/60 via-cocoa-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden sm:flex items-center justify-center gap-2">
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 setSelectedProduct(product);
               }}
-              className="px-3.5 py-2 bg-ivory-50 text-cocoa-900 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 hover:bg-gold-500 hover:text-white transition-colors shadow-md"
+              className="px-3.5 py-1.5 bg-ivory-50 text-cocoa-900 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 hover:bg-gold-500 hover:text-white transition-colors shadow-md"
             >
               <Eye className="w-3.5 h-3.5" />
               <span>View Details</span>
@@ -103,30 +103,30 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Product Information */}
-        <div className="p-4 sm:p-5 space-y-2.5 sm:space-y-3">
+        <div className="p-2.5 sm:p-5 space-y-1.5 sm:space-y-3">
           {/* Category & Size */}
-          <div className="flex items-center justify-between text-[11px] text-cocoa-500 uppercase tracking-wider font-medium">
-            <span>{product.categories?.[0]?.name || 'Flawless Routine'}</span>
-            {product.size && <span className="text-gold-700 font-semibold">{product.size}</span>}
+          <div className="flex items-center justify-between text-[9px] sm:text-[11px] text-cocoa-500 uppercase tracking-wider font-medium">
+            <span className="truncate">{product.categories?.[0]?.name || 'Flawless Routine'}</span>
+            {product.size && <span className="text-gold-700 font-semibold shrink-0 ml-1">{product.size}</span>}
           </div>
 
           {/* Product Name */}
-          <h3 className="font-serif text-base sm:text-lg font-bold text-cocoa-950 line-clamp-1 group-hover:text-gold-700 transition-colors">
+          <h3 className="font-serif text-xs sm:text-base lg:text-lg font-bold text-cocoa-950 line-clamp-1 group-hover:text-gold-700 transition-colors">
             {product.name}
           </h3>
 
-          {/* Short Description */}
-          <p className="text-xs text-cocoa-600 line-clamp-2 leading-relaxed">
+          {/* Short Description (Hidden on mobile 2-col to keep cards aligned, visible on sm+) */}
+          <p className="hidden sm:block text-xs text-cocoa-600 line-clamp-2 leading-relaxed">
             {product.description || 'Authentic medical-grade brightening formula for radiant skin.'}
           </p>
 
           {/* Authoritative Pricing */}
-          <div className="pt-1 flex items-baseline gap-2.5">
-            <span className="font-serif text-lg sm:text-xl font-bold text-cocoa-950">
+          <div className="pt-0.5 sm:pt-1 flex items-baseline gap-1.5 sm:gap-2.5">
+            <span className="font-serif text-sm sm:text-lg lg:text-xl font-bold text-cocoa-950">
               {formatPrice(currentPrice)}
             </span>
             {hasDiscount && (
-              <span className="text-xs text-cocoa-400 line-through">
+              <span className="text-[10px] sm:text-xs text-cocoa-400 line-through">
                 {formatPrice(product.price)}
               </span>
             )}
@@ -135,11 +135,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
 
       {/* Action Footer */}
-      <div className="p-4 sm:p-5 pt-0">
+      <div className="p-2.5 sm:p-5 pt-0">
         <button
           onClick={handleAddToCart}
           disabled={isOutOfStock || isAdding}
-          className={`w-full py-3.5 px-4 rounded-xl font-semibold uppercase tracking-wider text-xs transition-all duration-300 flex items-center justify-center gap-2 shadow-sm ${
+          className={`w-full py-2.5 sm:py-3 px-2 sm:px-4 rounded-xl font-semibold uppercase tracking-wider text-[10px] sm:text-xs transition-all duration-300 flex items-center justify-center gap-1.5 sm:gap-2 shadow-sm ${
             isOutOfStock
               ? 'bg-ivory-200 text-cocoa-400 cursor-not-allowed'
               : justAdded
@@ -148,16 +148,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           }`}
         >
           {isAdding ? (
-            <span>Adding to Cart...</span>
+            <span>Adding...</span>
           ) : justAdded ? (
             <>
-              <Check className="w-4 h-4" />
-              <span>Added to Cart</span>
+              <Check className="w-3.5 h-3.5" />
+              <span>Added</span>
             </>
           ) : (
             <>
-              <ShoppingBag className="w-4 h-4" />
-              <span>{isOutOfStock ? 'Sold Out' : 'Add to Cart'}</span>
+              <ShoppingBag className="w-3.5 h-3.5" />
+              <span>{isOutOfStock ? 'Sold Out' : 'Add to Bag'}</span>
             </>
           )}
         </button>

@@ -25,31 +25,31 @@ export const RoutineSection: React.FC = () => {
       step: '01',
       title: 'Cleanse',
       productName: 'Flawless Face Wash (200ml)',
-      time: 'Morning & Night',
+      time: 'AM & PM',
       icon: Droplets,
-      description: 'Start fresh with a cleanser enriched with Niacinamide, Glutathione and Vitamin E. Helps remove daily impurities while leaving your skin feeling refreshed.',
+      description: 'Gently lifts impurities while nourishing with Niacinamide, Glutathione, and Vitamin E.',
       product: faceWash,
       image: '/images/flawless-face-wash-front.jpg'
     },
     {
       step: '02',
       title: 'Tone',
-      productName: 'Flawless Toner (200ml)',
-      time: 'Post-Cleansing',
+      productName: 'Flawless Face Toner (120ml)',
+      time: 'Post-Cleanse',
       icon: Sparkles,
-      description: 'Refresh and tone your complexion with a formula designed to cleanse, tone and promote brighter-looking skin.',
+      description: 'Refines pore texture, balances pH, and primes the skin for deep active absorption.',
       product: toner,
-      image: '/images/flawless-face-wash-back.jpg'
+      image: '/images/flawless-toner-cream-duo.jpg'
     },
     {
       step: '03',
       title: 'Moisturise',
       productName: 'Flawless Face Cream (50g)',
-      time: 'Face Hydration',
+      time: 'Daily Radiance',
       icon: Sun,
-      description: 'Complete your facial skincare routine with a moisturising cream designed to support clear, radiant-looking skin.',
+      description: 'Infuses cellular hydration to fade dark spots and deliver an illuminating glass finish.',
       product: faceCream,
-      image: '/images/flawless-body-milk-lifestyle.webp'
+      image: '/images/flawless-trio-vanity.jpg'
     },
     {
       step: '04',
@@ -57,18 +57,18 @@ export const RoutineSection: React.FC = () => {
       productName: 'Flawless Body Milk (500ml)',
       time: 'Body Protocol',
       icon: Moon,
-      description: 'Treat your body to nourishing moisture with a lotion enriched with Niacinamide, Glutathione and Vitamin E, supporting soft, healthy-looking skin.',
+      description: 'Rich velvet body hydration that clarifies and tones from shoulders to heels.',
       product: bodyMilk,
       image: '/images/flawless-body-milk-front.jpg'
     }
   ];
 
   return (
-    <section id="routine" className="py-20 sm:py-28 bg-gradient-to-b from-ivory-50 to-champagne-light/50 border-b border-ivory-200 scroll-mt-20">
+    <section id="routine" className="py-16 sm:py-24 bg-gradient-to-b from-ivory-50 to-champagne-light/50 border-b border-ivory-200 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-3 sm:space-y-4 mb-14 sm:mb-20">
+        <div className="text-center max-w-3xl mx-auto space-y-2.5 sm:space-y-3 mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.25em] text-gold-700">
             <span className="w-1.5 h-1.5 rounded-full bg-gold-600" />
             <span>The Daily Protocol</span>
@@ -76,108 +76,109 @@ export const RoutineSection: React.FC = () => {
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-cocoa-950">
             The 4-Step Flawless Ritual
           </h2>
-          <div className="w-12 sm:w-16 h-0.5 bg-gold-400 mx-auto mt-2 sm:mt-4" />
-          <p className="text-cocoa-700 text-xs sm:text-sm md:text-base leading-relaxed pt-2 px-2">
-            Four Essentials. One Beautiful Glow. From your morning routine to your evening self-care ritual, each product works as part of a simple four-step experience. During the day, finish with a broad-spectrum sunscreen.
+          <div className="w-12 h-0.5 bg-gold-400 mx-auto mt-2" />
+          <p className="text-cocoa-700 text-xs sm:text-sm md:text-base leading-relaxed pt-1">
+            Four targeted steps designed to work in synergy for clear, luminous, healthy skin.
           </p>
         </div>
 
-        {/* Steps Grid - Stacked on Mobile, 2 on Tablet, 4 on Desktop */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 relative">
+        {/* Steps Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 relative">
           {steps.map((s, idx) => {
             const Icon = s.icon;
             return (
               <div
                 key={idx}
-                className="bg-ivory-50 rounded-3xl p-6 sm:p-8 border border-ivory-200 relative flex flex-col justify-between hover:border-gold-300 transition-all duration-300 hover:shadow-xl group"
+                className="bg-ivory-50 rounded-3xl p-5 sm:p-6 border border-ivory-200 relative flex flex-col justify-between hover:border-gold-300 transition-all duration-300 hover:shadow-lg group"
               >
-                {/* Large Background Step Number */}
-                <span className="font-serif text-5xl sm:text-6xl font-black text-ivory-200/90 absolute top-4 right-6 select-none group-hover:text-gold-200/50 transition-colors">
+                {/* Large Step Number */}
+                <span className="font-serif text-4xl sm:text-5xl font-black text-ivory-200/90 absolute top-4 right-5 select-none group-hover:text-gold-200/60 transition-colors">
                   {s.step}
                 </span>
 
-                <div className="space-y-4 sm:space-y-6 relative z-10">
-                  {/* Step Icon & Time */}
+                <div className="space-y-3 sm:space-y-4 relative z-10">
                   <div className="flex items-center justify-between">
-                    <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-champagne-light border border-gold-200 flex items-center justify-center text-gold-700">
-                      <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
+                    <div className="w-10 h-10 rounded-2xl bg-champagne-light border border-gold-200 flex items-center justify-center text-gold-700">
+                      <Icon className="w-5 h-5" />
                     </div>
-                    <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-cocoa-500 bg-white px-3 py-1 rounded-full border border-ivory-200">
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-cocoa-500 bg-white px-2.5 py-0.5 rounded-full border border-ivory-200">
                       {s.time}
                     </span>
                   </div>
 
-                  {/* Title & Product Name */}
-                  <div className="space-y-1">
-                    <h3 className="font-serif text-xl sm:text-2xl font-bold text-cocoa-950">
+                  <div className="space-y-0.5">
+                    <h3 className="font-serif text-xl font-bold text-cocoa-950">
                       {s.title}
                     </h3>
-                    <p className="text-xs uppercase tracking-wider font-semibold text-gold-700">
+                    <p className="text-[11px] uppercase tracking-wider font-semibold text-gold-700">
                       {s.productName}
                     </p>
                   </div>
 
-                  {/* Visual if product step */}
                   {s.image && (
-                    <div className="aspect-[16/10] bg-gradient-to-tr from-champagne-light to-ivory-100 rounded-2xl p-4 flex items-center justify-center border border-ivory-200/80 overflow-hidden">
+                    <div className="aspect-[4/3] bg-white rounded-2xl p-2.5 flex items-center justify-center border border-ivory-200/80 overflow-hidden shadow-inner">
                       <img
                         src={s.image}
                         alt={s.title}
-                        className="h-full object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
                       />
                     </div>
                   )}
 
-                  {/* Description */}
-                  <p className="text-xs sm:text-sm text-cocoa-600 leading-relaxed">
+                  <p className="text-xs text-cocoa-600 leading-relaxed font-normal">
                     {s.description}
                   </p>
                 </div>
 
-                {/* Footer Action */}
-                <div className="pt-4 sm:pt-6 border-t border-ivory-200/80 mt-6">
+                <div className="pt-4 border-t border-ivory-200/80 mt-4">
                   {s.product ? (
                     <button
                       onClick={() => setSelectedProduct(s.product)}
-                      className="w-full flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-cocoa-900 group-hover:text-gold-600 transition-colors py-1"
+                      className="w-full flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-cocoa-900 group-hover:text-gold-600 transition-colors py-0.5"
                     >
-                      <span>Explore Step Formula</span>
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                      <span>Explore Formula</span>
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                     </button>
-                  ) : (
-                    <span className="text-xs text-cocoa-400 italic">
-                      Essential skin preparation step
-                    </span>
-                  )}
+                  ) : null}
                 </div>
               </div>
             );
           })}
         </div>
 
-        {/* Routine Value Banner */}
-        <div className="mt-12 sm:mt-16 bg-white rounded-3xl p-6 sm:p-8 border border-ivory-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-4 text-left">
-            <div className="w-12 h-12 rounded-2xl bg-champagne-light border border-gold-200 flex items-center justify-center text-gold-700 shrink-0">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
+        {/* Routine Visual Feature Banner with Vanity Mirror Image */}
+        <div className="mt-12 sm:mt-16 bg-white rounded-3xl border border-ivory-200 shadow-md overflow-hidden grid grid-cols-1 md:grid-cols-12 items-center">
+          <div className="md:col-span-5 h-64 md:h-full relative overflow-hidden bg-ivory-200">
+            <img
+              src="/images/flawless-ritual-mirror.jpg"
+              alt="BB Glow Daily Skincare Ritual"
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
+          <div className="md:col-span-7 p-6 sm:p-10 space-y-4 text-left">
             <div className="space-y-1">
               <span className="text-[11px] uppercase tracking-widest text-gold-700 font-semibold">
                 The Complete System
               </span>
-              <p className="font-serif text-base sm:text-lg text-cocoa-950 font-bold max-w-2xl leading-snug">
-                The Flawless Set offers incredible value by combining your essential routine into one complete, long-lasting system that protects their skin barrier.
+              <h3 className="font-serif text-xl sm:text-2xl font-bold text-cocoa-950 leading-snug">
+                One Cohesive Protocol. Real-World Glow.
+              </h3>
+              <p className="text-xs sm:text-sm text-cocoa-600 leading-relaxed pt-1">
+                Combining all 4 essentials ensures uninterrupted skin barrier balance, accelerated clarity, and daily luminosity.
               </p>
             </div>
+
+            <div className="pt-2">
+              <a
+                href="#complete-set"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-cocoa-900 text-ivory-100 hover:bg-gold-600 rounded-full text-xs uppercase tracking-wider font-semibold transition-colors shadow-md"
+              >
+                <span>Shop The 4-Piece Set</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
           </div>
-          <a
-            href="#complete-set"
-            className="px-6 py-3.5 bg-cocoa-900 text-ivory-100 hover:bg-gold-600 rounded-full text-xs uppercase tracking-wider font-semibold transition-colors shrink-0 shadow-md flex items-center gap-2"
-          >
-            <span>Explore Complete Set</span>
-            <ArrowRight className="w-4 h-4" />
-          </a>
         </div>
 
       </div>

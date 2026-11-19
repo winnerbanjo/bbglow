@@ -51,9 +51,9 @@ export const BeforeAfterSection: React.FC = () => {
           <h2 className="font-serif text-3xl sm:text-5xl font-bold text-cocoa-950 tracking-tight">
             Visible Results. <span className="italic font-normal text-gold-600">Pure Radiance.</span>
           </h2>
-          <div className="w-12 sm:w-16 h-0.5 bg-gold-400 mx-auto mt-2 sm:mt-4" />
-          <p className="text-cocoa-700 text-sm sm:text-base leading-relaxed pt-2 px-2">
-            Real customers, unfiltered progress. See how the medical-grade bio-actives in Flawless by BB Glow restore skin clarity, smooth texture, and unlock true luminescence.
+          <div className="w-12 h-0.5 bg-gold-400 mx-auto mt-2" />
+          <p className="text-cocoa-700 text-xs sm:text-sm md:text-base leading-relaxed pt-1 px-2">
+            Real customers, verified results. See how Flawless clears hyperpigmentation, refines skin texture, and restores radiant balance.
           </p>
         </div>
 
@@ -75,10 +75,10 @@ export const BeforeAfterSection: React.FC = () => {
         </div>
 
         {/* Featured Case Study Card */}
-        <div className="bg-white rounded-3xl p-6 sm:p-10 lg:p-12 border border-ivory-200 shadow-xl overflow-hidden">
+        <div className="bg-white rounded-3xl p-4 sm:p-10 lg:p-12 border border-ivory-200 shadow-xl overflow-hidden ring-1 ring-gold-200/20">
           
           {/* Case Study Switcher Tabs */}
-          <div className="flex items-center justify-center gap-2 sm:gap-4 pb-8 mb-8 border-b border-ivory-200 overflow-x-auto text-xs">
+          <div className="flex items-center justify-center gap-2 sm:gap-4 pb-5 sm:pb-8 mb-6 sm:mb-8 border-b border-ivory-200 overflow-x-auto text-xs scrollbar-none">
             {caseStudies.map((c, i) => (
               <button
                 key={i}
